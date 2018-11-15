@@ -67,7 +67,6 @@
                               </figcaption>
                           </figure>
                       </div>
-                    <div></div>
 
 
                   </div>

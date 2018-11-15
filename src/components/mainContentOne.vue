@@ -67,8 +67,6 @@
                               </figcaption>
                           </figure>
                       </div>
-
-
                   </div>
               </v-flex>
           </v-layout>

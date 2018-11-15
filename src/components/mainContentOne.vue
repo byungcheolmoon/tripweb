@@ -56,10 +56,16 @@
                   <div class="grid_moon" >
                       <div  v-for="(pshow, index) in prodShowData"
                             :key="index"
+<<<<<<< HEAD
                             @click="prodShow(pshow.title)"
                             :class="`box${index + 1}`">
                           <figure class="effect-lily">
                               <img :src="pshow.image" :alt="`img${index + 1}`"/>
+=======
+                            :class="`box${index + 1}`">
+                          <figure class="effect-lily">
+                              <img :src="pshow.image" alt="img12"/>
+>>>>>>> fdad8a184f4ba68f6a12468ddddeaf6a07cda7f3
                               <figcaption>
                                   <div>
                                       <h2 class="font-weight-medium">{{pshow.title}}</h2>

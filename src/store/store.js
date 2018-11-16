@@ -20,7 +20,7 @@ const store = new Vuex.Store({
         error: null,
         content:'',
     },
-    plugins: [createPersistedState()],
+    //plugins: [createPersistedState()],
     mutations: {
         [Constant.MEMBER_INFO]: (state, payload) => {
             state.memberlogin.check     = payload.check;

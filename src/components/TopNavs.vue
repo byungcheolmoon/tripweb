@@ -46,7 +46,7 @@
             <v-layout row wrap>
                 <v-flex xs12  offset-xs>
 
-                    <v-toolbar v-bind:color="topNavColor()" flat>
+                    <v-toolbar :dark="topNavColorBind" v-bind:color="topNavColor()" flat>
 
                         <v-toolbar-title v-text="title" @click="homeClick" style="margin-right:50px;"></v-toolbar-title>
 
@@ -66,10 +66,10 @@
                         </v-menu>
 
                         <v-toolbar-items class="hidden-sm-and-down">
-                            <v-btn flat to="/TourMain">Tour</v-btn>
-                            <v-btn flat to="/linktest">Product</v-btn>
-                            <v-btn flat to="/test">test</v-btn>
-                            <v-btn flat v-bind:to="{ name: 'boardNoticeList'}">Board</v-btn>
+                            <v-btn flat  to="/TourMain">Tour</v-btn>
+                            <v-btn flat @click="changeNavC" to="/linktest">Product</v-btn>
+                            <v-btn @click="changeNavC" flat to="/test">test</v-btn>
+                            <v-btn @click="changeNavC" flat v-bind:to="{ name: 'boardNoticeList'}">Board</v-btn>
                         </v-toolbar-items>
 
                         <v-spacer></v-spacer>
@@ -113,10 +113,12 @@
 <script>
     import { mapState } from "vuex";
     import Constant from "../Constant";
+    import eventBus from "../EventBus"
 
 
     export default {
         data: () => ({
+            topNavColorBind:false,
             title: "Tripwith56",
             itemtopmenu: ["All", "Family", "Friends", "Coworkers"],
             localitems: [],
@@ -125,24 +127,21 @@
             drawer: false,
             items: [
                 { icon: 'help', text: 'Index' },
-                // { icon: 'history', text: 'Frequently contacted' },
                 { icon: 'play_arrow', text: 'Video' },
                 { icon: 'play_arrow', text: 'Board' },
-                // { icon: 'settings', text: 'Video' },
-                // { icon: 'chat_bubble', text: 'Send feedback' },
-                // { icon: 'contacts', text: 'Help' },
-                // { icon: 'phonelink', text: 'App downloads' },
-                // { icon: 'keyboard', text: 'Go to the old version' }
             ]
         }),
         props: {
             source: String
         },
-
+        created : function() {
+            eventBus.$on('topNavCheck', this.changeNav);
+        },
         computed: {
             ...mapState({
                 memberitems: state => state.memberitems,
-                memberinfo: state => state.memberinfo.nickname
+                memberinfo: state => state.memberinfo.nickname,
+
             })
         },
         mounted: function() {
@@ -157,9 +156,12 @@
         watch: {
             memberitems: function(newContacts) {
                 this.localitems = { ...newContacts };
-            }
+            },
         },
         methods: {
+            changeNav(item){
+                this.topNavColorBind = item
+            },
             sideMenu(item){
                 switch (item){
                     case 'Index' :
@@ -198,18 +200,25 @@
                     this.$store.dispatch('resetUsername');
                     this.$store.dispatch(Constant.TOPNAV_MENU, { id: false });
                     this.$router.push({ name: "index" });
+                    this.topNavColorBind = false
                 } else {
+                    this.topNavColorBind = false
                     this.$router.push({ path: "/login" });
+
                     // let route = this.$router.resolve('/link/to/page'); // This also works.
 
                     // this.$router.push({ name: "login" });
                 }
             },
             homeClick(){
+                this.topNavColorBind = false
                 this.$router.push({ name: "main" })
             },
             topNavColor(){
-                return 'rgba(255, 255, 255, 0.7)';
+                return 'rgba(255, 255, 255, 0.3)';
+            },
+            changeNavC(){
+                this.topNavColorBind = false
             }
         }
     };

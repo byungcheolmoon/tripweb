@@ -60,8 +60,12 @@
 </template>
 
 <script>
+    import eventBus from "../EventBus"
     export default {
         name: "tour-main",
+        created : function() {
+            eventBus.$emit('topNavCheck' , true)
+        },
         methods:{
             linkTourBtn(item){
                 console.log(item);

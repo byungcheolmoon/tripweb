@@ -13,7 +13,7 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import 'font-awesome/css/font-awesome.min.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import mainContent from './components/mainContent.vue'
-import linktest from './components/linktest.vue';
+import TourMain from './components/TourMain.vue';
 import VueSession from 'vue-session'
 import loginPage from './components/loginPage.vue';
 import Constant from './Constant';
@@ -77,7 +77,7 @@ const router = new VueRouter({
             component: mainContent
         },
 
-        { path: "/linktest", name: 'linktest', component: linktest },
+        { path: "/TourMain", name: 'TourMain', component: TourMain },
         { path: "/login", name: 'login', component: loginPage, props: true},
         { path: "/adminIndex", name: 'adminIndex', component: adminIndex },
         { path: "/adminProdList" , name: 'adminProduct', component: adminProdList },

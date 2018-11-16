@@ -1,9 +1,9 @@
 <template>
   <v-app >
-
+    <!--<img id="topImage" src="@/assets/images/tour_top_back.jpg" alt="Vuetify.js" class="mb-5">-->
+    <top-navs id="topnavsz"></top-navs>
     <v-content>
-      <top-navs></top-navs>
-      <v-container fluid style="padding-top:0px !important; background: #ffffff !important;">
+      <v-container fluid class="pl-0 pr-0 pt-0" style="background: #ffffff !important;">
         <router-view></router-view>
       </v-container>
     </v-content>
@@ -40,7 +40,8 @@ export default {
     return {
 
       fixed: false,
-      localmemberinfo: []
+      localmemberinfo: [],
+      image:'http://nawara-fish.com/web/trip/images/tour_top_back.jpg',
     };
   },
   watch: {
@@ -80,6 +81,18 @@ export default {
 </script>
 
 <style>
+#topnavsz{
+  z-index:5;
+}
+  /*.nav_moon_table tr td{
+    position: absolute;
+    border:hidden;
+    width: 100%;
+    height: 300px;
+    text-align: center;
+    color:white;
+    text-shadow: 1px 1px black;
+    z-index: 0;
 
-
+  }*/
 </style>

@@ -1,7 +1,6 @@
 <template>
     <div>
         <!-- <swiper-top class="hidden-sm-and-down"></swiper-top> -->
-
         <swp></swp>
         <!--<v-carousel hide-delimiters >
           <v-carousel-item
@@ -14,14 +13,13 @@
         <v-content>
             <main-content-one />
         </v-content>
-
     </div>
 
 </template>
 
 <script>
     import mainContentOne from "./mainContentOne";
-    import swp from "./linktest";
+    import swp from "./SwiperMoon";
     // import SwiperTop from "./SwiperTop";
 
 

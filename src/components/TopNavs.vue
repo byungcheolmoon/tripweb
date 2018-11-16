@@ -66,7 +66,7 @@
                         </v-menu>
 
                         <v-toolbar-items class="hidden-sm-and-down">
-                            <v-btn flat to="/linktest">Link</v-btn>
+                            <v-btn flat to="/linktest">Tour</v-btn>
                             <v-btn flat to="/linktest">Product</v-btn>
                             <v-btn flat to="/test">test</v-btn>
                             <v-btn flat v-bind:to="{ name: 'boardNoticeList'}">Board</v-btn>

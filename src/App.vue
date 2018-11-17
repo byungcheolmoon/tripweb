@@ -82,7 +82,7 @@ export default {
 
 <style>
 #topnavsz{
-  z-index:5;
+  z-index:1;
 }
   /*.nav_moon_table tr td{
     position: absolute;

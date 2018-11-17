@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="moons_background" style="margin-bottom:300px;"></div>
-        <v-container text-xs-center>
+        <v-container text-xs-center style="max-width: 1280px">
         <v-layout >
             <v-flex xs12    style="position: relative">
                 <table class="nav_tour_table">
@@ -98,14 +98,13 @@
 
     .grid_tour {
         position: relative;
-        margin: 0 auto;
+        margin: 5px;
         /*padding: 1em 0 4em;*/
         /*max-width: 1000px;*/
         height: 100%;
         list-style: none;
         text-align: center;
         overflow: hidden;
-
         background:#000; /*Change this to a background image or remove*/
         border:solid #fff;
         border-width:6px 6px 20px 6px;

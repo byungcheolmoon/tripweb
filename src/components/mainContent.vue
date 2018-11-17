@@ -1,17 +1,8 @@
 <template>
     <div>
-        <!-- <swiper-top class="hidden-sm-and-down"></swiper-top> -->
         <swp></swp>
-        <!--<v-carousel hide-delimiters >
-          <v-carousel-item
-                  v-for="(item,i) in items"
-                  :key="i"
-                  :src="item.src"
-          ></v-carousel-item>
-        </v-carousel>-->
-
         <v-content>
-            <main-content-one />
+            <main-content-one/>
         </v-content>
     </div>
 

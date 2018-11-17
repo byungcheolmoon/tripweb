@@ -44,7 +44,7 @@
       </v-container>
 
 
-      <v-container class="hidden-sm-and-down" style="min-width: 1024px !important; ">
+      <v-container class="hidden-sm-and-down" style="max-width: 1180px !important; ">
           <v-layout row wrap>
               <v-flex xs12 text-xs-center>
                   <v-card white flat>

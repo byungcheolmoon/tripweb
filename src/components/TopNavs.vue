@@ -1,6 +1,6 @@
 <template>
 
-    <div id="inspire">
+    <div id="inspire" style="background: rgba(255, 255, 255, 0.1)">
         <v-navigation-drawer
                 :clipped="$vuetify.breakpoint.lgAndUp"
                 v-model="drawer"
@@ -41,7 +41,7 @@
         </v-navigation-drawer>
 
 
-        <v-container text-xs-center style="margin-top:0px; padding-top:0px; padding-bottom:0px; ">
+        <v-container text-xs-center style="margin-top:0px; padding-top:0px; padding-bottom:0px; max-width: 1280px; ">
 
             <v-layout row wrap>
                 <v-flex xs12  offset-xs>
@@ -215,7 +215,7 @@
                 this.$router.push({ name: "main" })
             },
             topNavColor(){
-                return 'rgba(255, 255, 255, 0.3)';
+                return 'rgba(255, 255, 255, 0.1)';
             },
             changeNavC(){
                 this.topNavColorBind = false

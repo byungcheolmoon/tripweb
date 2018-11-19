@@ -2,30 +2,18 @@
     <div>
         <top-background :val="this.cate"></top-background>
         <v-container text-xs-center style="max-width: 1280px">
-            <v-layout >
+            <v-layout row wrap >
                 <v-flex xs12  style="position: relative">
                   <div style="color:white" class="display-1 font-weight-medium">{{this.toptitle}}</div>
                    <div class="subheading"> asldkfjsalkdjflsakjdflkjsadflkjsdf </div>
-
-                                <div class="grid_tour">
-                                    <a id="atags" href="#">
-                                        <figure>
-                                            <img src="@/assets/images/tour_top_00.jpg" alt="img12"/>
-                                            <figcaption>
-                                                <div>
-                                                    <h2><span>베트남</span></h2>
-                                                    <p>travel and beautiful companions</p>
-                                                </div>
-
-                                            </figcaption>
-                                        </figure>
-                                    </a>
-                                </div>
-
-
-
-
                 </v-flex>
+
+                <v-flex xs12  style="position: relative">
+                    <v-card dark color="primary">
+                        <v-card-text class="px-0">12</v-card-text>
+                    </v-card>
+                </v-flex>
+
             </v-layout>
         </v-container>
 

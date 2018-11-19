@@ -61,7 +61,6 @@
 
 <script>
     import eventBus from "../EventBus"
-    import eventBus1 from "../EventBus";
     import TopBackground from "./Tour_assetsBackgroundTop";
     export default {
         name: "tour-main",

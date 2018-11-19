@@ -1,15 +1,27 @@
 <template>
-    <div class="moons_background" :style="{ 'background-image': 'url(' + tourbg + ')' }">
-        {{this.tourbg}}
-    </div>
+    <div class="moons_background" :style="{ 'background-image': 'url(' + tourbg + ')' }"></div>
 </template>
 
 <script>
     export default {
         name: "tour_assets-background-top",
+        props : ['val'],
         data: () => ({
-            tourbg :'http://nawara-fish.com/web/trip/images/tour_top_back.jpg'
+            tourbg :''
         }),
+        created(){
+            switch (this.val){
+                case 'vietnam':
+                    return this.tourbg = 'http://nawara-fish.com/web/trip/images/tour_top_02.jpg';
+                case 'guam':
+                    return this.tourbg = 'http://nawara-fish.com/web/trip/images/tour_top_01.jpg';
+                case 'thailand':
+                    return this.tourbg = 'http://nawara-fish.com/web/trip/images/tour_top_00.jpg';
+                default :
+                    return this.tourbg = 'http://nawara-fish.com/web/trip/images/tour_top_back.jpg';
+            }
+
+        }
     }
 </script>
 

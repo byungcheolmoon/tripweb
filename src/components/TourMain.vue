@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="moons_background" style="margin-bottom:300px;"></div>
+        <top-background></top-background>
         <v-container text-xs-center style="max-width: 1280px">
         <v-layout >
             <v-flex xs12    style="position: relative">
@@ -8,7 +8,7 @@
                     <tr>
                         <td width="33%" align="center" style="vertical-align: middle;">
 
-                            <div class="grid_tour" @click="linkTourBtn('Vietnam')">
+                            <div class="grid_tour" @click="linkTourBtn('vietnam')">
                                 <a id="atags" href="#">
                                     <figure>
                                         <img src="@/assets/images/tour_top_00.jpg" alt="img12"/>
@@ -38,7 +38,7 @@
                             </div>
                         </td>
                         <td width="33%" align="center" style="vertical-align: middle;">
-                            <div class="grid_tour" @click="linkTourBtn('Thailand')">
+                            <div class="grid_tour" @click="linkTourBtn('thailand')">
                                 <figure>
                                     <img src="@/assets/images/tour_top_02.jpg" alt="img12"/>
                                     <figcaption>
@@ -61,33 +61,26 @@
 
 <script>
     import eventBus from "../EventBus"
+    import eventBus1 from "../EventBus";
+    import TopBackground from "./Tour_assetsBackgroundTop";
     export default {
         name: "tour-main",
+        components: {
+            TopBackground
+        },
         created : function() {
             eventBus.$emit('topNavCheck' , true)
         },
         methods:{
             linkTourBtn(item){
-                console.log(item);
-            }
+                this.$router.push({name:'TourPass', params:{ cate:item }})
+            },
         }
     }
 </script>
 
 <style scoped>
-    .moons_background {
-        background-image: url('http://nawara-fish.com/web/trip/images/tour_top_back.jpg');
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
-        width: 100%;
-        z-index: 0;
-        margin-top: -50px;
-        height: 400px;
-        opacity: 1;
-        position: absolute;
-        top:-14px;
-    }
+
     .nav_tour_table{
         position: absolute; top:100px; height: 400px; vertical-align: middle; border:none;
     }

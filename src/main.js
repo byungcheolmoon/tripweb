@@ -13,7 +13,6 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import 'font-awesome/css/font-awesome.min.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import mainContent from './components/mainContent.vue'
-import TourMain from './components/TourMain.vue';
 import VueSession from 'vue-session'
 import loginPage from './components/loginPage.vue';
 import Constant from './Constant';
@@ -42,6 +41,10 @@ import BoardLists from './components/BoardLists'
 import BoardDetails from './components/BoardDetails';
 
 import ProdDetailType1 from './components/ProdDetailType1';
+
+import TourMain from './components/TourMain';
+import TourStep1 from './components/TourStep1';
+
 
 Vue.use(VueVideoPlayer, /* {
   options: global default options,
@@ -78,6 +81,9 @@ const router = new VueRouter({
         },
 
         { path: "/TourMain", name: 'TourMain', component: TourMain },
+        { path: "/TourStep1", name: 'TourPass', component: TourStep1, props:true },
+
+
         { path: "/login", name: 'login', component: loginPage, props: true},
         { path: "/adminIndex", name: 'adminIndex', component: adminIndex },
         { path: "/adminProdList" , name: 'adminProduct', component: adminProdList },

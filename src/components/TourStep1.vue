@@ -1,17 +1,41 @@
 <template>
     <div>
         <top-background :val="this.cate"></top-background>
-        <v-container text-xs-center style="max-width: 1280px">
+        <v-container text-xs-center style="max-width: 1280px; margin-top:106px;">
             <v-layout row wrap >
                 <v-flex xs12  style="position: relative">
                   <div style="color:white" class="display-1 font-weight-medium">{{this.toptitle}}</div>
                    <div class="subheading"> asldkfjsalkdjflsakjdflkjsadflkjsdf </div>
                 </v-flex>
 
-                <v-flex xs12  style="position: relative">
-                    <v-card dark color="primary">
-                        <v-card-text class="px-0">12</v-card-text>
-                    </v-card>
+                <v-flex xs12  style="position: relative; margin-top:30px; min-height:200px;">
+                    <v-container fill-height>
+                        <v-layout align-center justify-center>
+                            <v-flex xs8>
+                                <v-card height="300px">
+                                    <v-container fill-height>
+                                        <v-layout align-center justify-center>
+                                            <v-card-text>
+                                                <p>asdfasdf</p>
+                                            </v-card-text>
+                                        </v-layout>
+                                    </v-container>
+                                </v-card>
+                            </v-flex>
+
+                            <v-flex xs4>
+                                <v-card height="300px">
+                                    <v-container fill-height>
+                                        <v-layout align-center justify-center>
+                                            <v-card-text>
+                                                <p>asdfasdf</p>
+                                            </v-card-text>
+                                        </v-layout>
+                                    </v-container>
+                                </v-card>
+                            </v-flex>
+                        </v-layout>
+                    </v-container>
                 </v-flex>
 
             </v-layout>
@@ -53,7 +77,7 @@
     @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
     .display-1{
         text-shadow: 1px 1px 1px #292c44;
-        word-spacing: -0.15em;
+        word-spacing: 0.4em;
     }
     .subheading{
         color:white;

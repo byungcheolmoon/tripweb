@@ -28,11 +28,12 @@
                                     <v-container fill-height>
                                         <v-layout align-center justify-center>
                                             <v-card-text>
-                                                <p>베트남에 대한 기본정보</p>
+                                                <weather :titles="this.cate"></weather>
                                             </v-card-text>
                                         </v-layout>
                                     </v-container>
                                 </v-card>
+
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -43,9 +44,17 @@
 
         <v-container text-xs-center style="max-width: 1280px; margin-top:10px;">
             <v-layout>
-                <v-flex>
-                    <v-card>
-                        <v-card-text>asdf</v-card-text>
+                <v-flex xs12>
+                    <v-card color="blue-grey darken-2" class="white--text">
+                        <v-card-title primary-title>
+                            <div>
+                                <div class="headline">Unlimited music now</div>
+                                <span>Listen to your favorite artists and albums whenever and wherever, online and offline.</span>
+                            </div>
+                        </v-card-title>
+                        <v-card-actions>
+                            <v-btn flat dark>Listen now</v-btn>
+                        </v-card-actions>
                     </v-card>
                 </v-flex>
             </v-layout>
@@ -57,6 +66,7 @@
 <script>
     import eventBus from "../EventBus"
     import TopBackground from "./Tour_assetsBackgroundTop";
+    import weather from "./utilWeather";
 
     export default {
         name: "tour-step1",
@@ -64,7 +74,7 @@
             toptitle :''
         }),
         components: {
-            TopBackground
+            TopBackground, weather
         },
         props:['cate'],
         created(){

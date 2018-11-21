@@ -16,7 +16,7 @@
                                     <v-container fill-height>
                                         <v-layout align-center justify-center>
                                             <v-card-text>
-                                                <p>asdfasdf</p>
+                                                <p>{{this.cate}} 이미지</p>
                                             </v-card-text>
                                         </v-layout>
                                     </v-container>
@@ -28,7 +28,7 @@
                                     <v-container fill-height>
                                         <v-layout align-center justify-center>
                                             <v-card-text>
-                                                <p>asdfasdf</p>
+                                                <p>베트남에 대한 기본정보</p>
                                             </v-card-text>
                                         </v-layout>
                                     </v-container>
@@ -38,6 +38,16 @@
                     </v-container>
                 </v-flex>
 
+            </v-layout>
+        </v-container>
+
+        <v-container text-xs-center style="max-width: 1280px; margin-top:10px;">
+            <v-layout>
+                <v-flex>
+                    <v-card>
+                        <v-card-text>asdf</v-card-text>
+                    </v-card>
+                </v-flex>
             </v-layout>
         </v-container>
 

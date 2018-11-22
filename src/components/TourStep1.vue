@@ -87,9 +87,14 @@
                                  :src="card.image"/>
 
                             <div class="card-footer">
-                                <p class="card-text font-weigth-light">NEW</p>
-                                <h3 class="card-title title" style="font-weight: 600">{{card.title}}</h3>
-                                <p class="card-text">by
+                                <p class="card-text text-xs-left font-weigth-light">
+                                    <v-chip color="orange" text-color="white">
+                                        Premium
+                                        <v-icon right>star</v-icon>
+                                    </v-chip>
+                                </p>
+                                <h3 class="card-title title" style="font-weight: 400">{{card.title}}</h3>
+                                <p class="card-text">
                                     <span
                                             class="card-author"
                                             :class="{'selected': isSelected(index)}">
@@ -97,6 +102,7 @@
                                 </span>
                                 </p>
                             </div>
+
                         </div>
                     </div>
                 </v-flex>
@@ -117,10 +123,10 @@
             return {
                 toptitle :'',
                 cards: [
-                    {title: '초호화 요트투어', author: 'tripwithPick', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass1.jpg'},
-                    {title: 'Crisp Spanish Tortilla Matzo Brei', author: 'Colman Andrews', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass2.jpg'},
-                    {title: 'Grilled Shrimp with Lemon and Garlic', author: 'Celeste Mills', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass3.jpg'},
-                    {title: 'Grilled Shrimp with Lemon and Garlic', author: 'Celeste Mills', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass4.jpg'}
+                    {title: 'Shuttle Chiangmai Airport', author: '셔틀 다낭 공항픽업', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass1.jpg'},
+                    {title: 'Chiangmai - Luang', author: '다낭-루앙프라방 에어패스', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass2.jpg'},
+                    {title: 'Chiang Mai Luang Praban', author: '다낭-루앙프라방패스', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass3.jpg'},
+                    {title: 'Chiangmai - Pai Pass', author: '다낭-빠이버스', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass4.jpg'}
                 ],
                 /*prodShowData:{ box1:'box1', box2:'box2', box3:'box3', box4:'box4', box5:'box5', box6:'box7'},*/
                 selectedCard: -1,
@@ -157,8 +163,8 @@
                     const direction = this.calculateCardDirection(index, this.selectedCard)
                     TweenMax.to(
                         this.$refs[`card_${index}`],
-                        0.3,
-                        {x: direction * 10}
+                        0.5,
+                        {x: direction * 6}
                     )
                 })
             },
@@ -168,6 +174,9 @@
                 }
                 const diff = cardIndex - selectedIndex
                 return diff === 0 ? 0 : diff/Math.abs(diff)
+            },
+            click(item){
+                console.log(item);
             },
         }
     }
@@ -190,15 +199,15 @@
         background-color: #FFFFFF;
         height: 370px;
         width: 268px;
-        margin: 10px;
+        margin: 6px;
         overflow: hidden;
         box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.3);
         transition: height 0.3s, box-shadow 0.3s;
     }
 
     .card:hover {
-        height: 410px;
-        box-shadow: 20px 20px 40px 0px rgba(0,0,0,0.2);
+        height: 400px;
+        box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.2);
     }
 
     .card-image {
@@ -208,20 +217,21 @@
         right: -9999px;
         margin: auto;
 
-        height: 220px;
+        height: 240px;
         min-width: 100%;
         transition: height 0.3s, opacity 0.3s;
     }
     .card-image.selected {
-        height: 410px;
+        height: 260px;
         opacity: 0.5;
     }
     .card-footer {
         width: 100%;
         position: absolute;
+        text-align: left;
         bottom: 0;
         height: 130px;
-        padding: 10px 15px;
+        padding: 10px 10px;
         font-family: Helvetica;
     }
 
@@ -234,11 +244,11 @@
     }
     .card-author {
         font-size: 14px;
-        color: #BAB096;
+        color: black;
         transition: color 0.3s;
     }
     .card-author.selected {
-        color: #6a6456;
+        color: black;
     }
 
     .display-1{

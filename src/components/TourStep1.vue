@@ -4,8 +4,8 @@
         <v-container text-xs-center style="max-width: 1280px; margin-top:106px;">
             <v-layout row wrap >
                 <v-flex xs12  style="position: relative">
-                  <div style="color:white" class="display-1 font-weight-medium">{{this.toptitle}}</div>
-                   <div class="subheading"> asldkfjsalkdjflsakjdflkjsadflkjsdf </div>
+                  <div style="color:white; text-shadow: 1px 1px 1px #292c44;" class="display-1 font-weight-medium" >{{this.toptitle}}</div>
+                   <div class="subheading" style="color:white; text-shadow: 1px 1px 1px #292c44; word-spacing: -0.15em;"> asldkfjsalkdjflsakjdflkjsadflkjsdf </div>
                 </v-flex>
 
                 <v-flex xs12  style="position: relative; margin-top:30px; min-height:200px;">
@@ -48,7 +48,7 @@
                     <v-card color="blue-grey darken-2" class="white--text">
                         <v-card-title primary-title>
                             <div>
-                                <div class="headline">Unlimited music now</div>
+                                <div class="headline">걍 샘플로 넣어둔 부분</div>
                                 <span>Listen to your favorite artists and albums whenever and wherever, online and offline.</span>
                             </div>
                         </v-card-title>
@@ -56,6 +56,49 @@
                             <v-btn flat dark>Listen now</v-btn>
                         </v-card-actions>
                     </v-card>
+                </v-flex>
+            </v-layout>
+        </v-container>
+
+        <v-container text-xs-center style="padding-top:50px;">
+            <v-layout  row wrap>
+                <v-flex xs12>
+                    <v-card white flat>
+
+                        <div class="px-0 display-1 font-weight-regular">
+                            PASS
+                            <v-badge color="orange mb-4 "> <v-icon slot="badge" dark small>fas fa fa-bus</v-icon></v-badge>
+                        </div>
+                        <div class="subheading font-weigth-light">베트남(다낭, 호이안)을 연결하는 가장 쉬운 교통편</div>
+                    </v-card>
+                </v-flex>
+                <v-flex xs12>
+                    <div class="card-row">
+                        <div v-for="(card, index) in cards"
+                             :key="index"
+                             :ref="`card_${index}`"
+                             @mouseover="hoverCard(index)"
+                             @mouseout="hoverCard(-1)"
+                             @click="click(card.title)"
+                             class="card">
+
+                            <img class="card-image"
+                                 :class="{'selected': isSelected(index)}"
+                                 :src="card.image"/>
+
+                            <div class="card-footer">
+                                <p class="card-text font-weigth-light">NEW</p>
+                                <h3 class="card-title title" style="font-weight: 600">{{card.title}}</h3>
+                                <p class="card-text">by
+                                    <span
+                                            class="card-author"
+                                            :class="{'selected': isSelected(index)}">
+                                    {{card.author}}
+                                </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -70,9 +113,20 @@
 
     export default {
         name: "tour-step1",
-        data: () => ({
-            toptitle :''
-        }),
+        data: function() {
+            return {
+                toptitle :'',
+                cards: [
+                    {title: '초호화 요트투어', author: 'tripwithPick', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass1.jpg'},
+                    {title: 'Crisp Spanish Tortilla Matzo Brei', author: 'Colman Andrews', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass2.jpg'},
+                    {title: 'Grilled Shrimp with Lemon and Garlic', author: 'Celeste Mills', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass3.jpg'},
+                    {title: 'Grilled Shrimp with Lemon and Garlic', author: 'Celeste Mills', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass4.jpg'}
+                ],
+                /*prodShowData:{ box1:'box1', box2:'box2', box3:'box3', box4:'box4', box5:'box5', box6:'box7'},*/
+                selectedCard: -1,
+                lorem: `Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.`
+            }
+        },
         components: {
             TopBackground, weather
         },
@@ -90,19 +144,105 @@
                     return this.toptitle= 'TripWith가 추천하는 여행지';
             }
         },
+        methods:{
+            hoverCard(selectedIndex) {
+                this.selectedCard = selectedIndex
+                this.animateCards()
+            },
+            isSelected (cardIndex) {
+                return this.selectedCard === cardIndex
+            },
+            animateCards () {
+                this.cards.forEach((card, index) => {
+                    const direction = this.calculateCardDirection(index, this.selectedCard)
+                    TweenMax.to(
+                        this.$refs[`card_${index}`],
+                        0.3,
+                        {x: direction * 10}
+                    )
+                })
+            },
+            calculateCardDirection (cardIndex, selectedIndex) {
+                if(selectedIndex === -1) {
+                    return 0
+                }
+                const diff = cardIndex - selectedIndex
+                return diff === 0 ? 0 : diff/Math.abs(diff)
+            },
+        }
     }
 </script>
 
 <style scoped>
     @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
-    .display-1{
-        text-shadow: 1px 1px 1px #292c44;
-        word-spacing: 0.4em;
+
+    .card-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 780px;
+        width: 100%;
+        height: 400px;
     }
-    .subheading{
-        color:white;
-        text-shadow: 1px 1px 1px #292c44;
-        word-spacing: -0.15em;
+
+    .card {
+        position: relative;
+        background-color: #FFFFFF;
+        height: 370px;
+        width: 268px;
+        margin: 10px;
+        overflow: hidden;
+        box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.3);
+        transition: height 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+        height: 410px;
+        box-shadow: 20px 20px 40px 0px rgba(0,0,0,0.2);
+    }
+
+    .card-image {
+        /* center horizontally overflown image */
+        position: absolute;
+        left: -9999px;
+        right: -9999px;
+        margin: auto;
+
+        height: 220px;
+        min-width: 100%;
+        transition: height 0.3s, opacity 0.3s;
+    }
+    .card-image.selected {
+        height: 410px;
+        opacity: 0.5;
+    }
+    .card-footer {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        height: 130px;
+        padding: 10px 15px;
+        font-family: Helvetica;
+    }
+
+    .card-text {
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.7);
+    }
+    .card-title {
+        font-family: Serif;
+    }
+    .card-author {
+        font-size: 14px;
+        color: #BAB096;
+        transition: color 0.3s;
+    }
+    .card-author.selected {
+        color: #6a6456;
+    }
+
+    .display-1{
+        word-spacing: 0.4em;
     }
 
 

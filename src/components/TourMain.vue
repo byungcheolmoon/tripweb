@@ -60,6 +60,7 @@
 </template>
 
 <script>
+    import {TweenMax, Power2, TimelineLite} from "gsap/TweenMax";
     import eventBus from "../EventBus"
     import TopBackground from "./Tour_assetsBackgroundTop";
     export default {
@@ -67,6 +68,7 @@
         components: {
             TopBackground
         },
+
         created : function() {
             eventBus.$emit('topNavCheck' , true)
         },
@@ -74,6 +76,7 @@
             linkTourBtn(item){
                 this.$router.push({name:'TourPass', params:{ cate:item }})
             },
+
         }
     }
 </script>

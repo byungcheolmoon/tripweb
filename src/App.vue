@@ -1,5 +1,5 @@
 <template>
-  <v-app >
+  <v-app style="min-width: 1280px">
     <!--<img id="topImage" src="@/assets/images/tour_top_back.jpg" alt="Vuetify.js" class="mb-5">-->
     <top-navs id="topnavsz"></top-navs>
     <v-content>

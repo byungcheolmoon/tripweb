@@ -44,6 +44,7 @@ import ProdDetailType1 from './components/ProdDetailType1';
 
 import TourMain from './components/TourMain';
 import TourStep1 from './components/TourStep1';
+import TourStep2 from './components/TourStep2';
 
 
 Vue.use(VueVideoPlayer, /* {
@@ -82,6 +83,7 @@ const router = new VueRouter({
 
         { path: "/TourMain", name: 'TourMain', component: TourMain },
         { path: "/TourStep1", name: 'TourPass', component: TourStep1, props:true },
+        { path: "/TourStep2", name: 'TourDetail', component: TourStep2, props:true },
 
 
         { path: "/login", name: 'login', component: loginPage, props: true},

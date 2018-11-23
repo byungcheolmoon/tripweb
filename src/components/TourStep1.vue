@@ -79,7 +79,7 @@
                              :ref="`card_${index}`"
                              @mouseover="hoverCard(index)"
                              @mouseout="hoverCard(-1)"
-                             @click="click(card.title)"
+                             @click="click(card.idx)"
                              class="card">
 
                             <img class="card-image"
@@ -123,10 +123,10 @@
             return {
                 toptitle :'',
                 cards: [
-                    {title: 'Shuttle Chiangmai Airport', author: '셔틀 다낭 공항픽업', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass1.jpg'},
-                    {title: 'Chiangmai - Luang', author: '다낭-루앙프라방 에어패스', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass2.jpg'},
-                    {title: 'Chiang Mai Luang Praban', author: '다낭-루앙프라방패스', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass3.jpg'},
-                    {title: 'Chiangmai - Pai Pass', author: '다낭-빠이버스', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass4.jpg'}
+                    {idx:1, title: 'Shuttle Chiangmai Airport', author: '셔틀 다낭 공항픽업', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass1.jpg'},
+                    {idx:2, title: 'Chiangmai - Luang', author: '다낭-루앙프라방 에어패스', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass2.jpg'},
+                    {idx:3, title: 'Chiang Mai Luang Praban', author: '다낭-루앙프라방패스', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass3.jpg'},
+                    {idx:4, title: 'Chiangmai - Pai Pass', author: '다낭-빠이버스', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass4.jpg'}
                 ],
                 /*prodShowData:{ box1:'box1', box2:'box2', box3:'box3', box4:'box4', box5:'box5', box6:'box7'},*/
                 selectedCard: -1,
@@ -176,7 +176,7 @@
                 return diff === 0 ? 0 : diff/Math.abs(diff)
             },
             click(item){
-                console.log(item);
+                this.$router.push({name:'TourDetail', params:{idx:item}})
             },
         }
     }

@@ -6,6 +6,7 @@
                 v-model="drawer"
                 fixed
                 app
+                v-if="this.memberinfo != null"
         >
             <v-list dense>
                 <template v-for="item in items" >

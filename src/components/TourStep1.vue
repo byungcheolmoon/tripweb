@@ -2,14 +2,14 @@
     <div>
         <top-background :val="this.cate"></top-background>
         <v-container text-xs-center style="max-width: 1280px; margin-top:106px;">
-            <v-layout row wrap >
+            <v-layout row wrap style="width:1280px !important;">
                 <v-flex xs12  style="position: relative">
                   <div style="color:white; text-shadow: 1px 1px 1px #292c44;" class="display-1 font-weight-medium" >{{this.toptitle}}</div>
                    <div class="subheading" style="color:white; text-shadow: 1px 1px 1px #292c44; word-spacing: -0.15em;"> asldkfjsalkdjflsakjdflkjsadflkjsdf </div>
                 </v-flex>
 
-                <v-flex xs12  style="position: relative; margin-top:30px; min-height:200px;">
-                    <v-container fill-height>
+                <v-flex style="position: relative; margin-top:30px; min-height:200px;">
+                    <v-container fill-height d-flex>
                         <v-layout align-center justify-center>
                             <v-flex xs8>
                                 <v-card height="300px">
@@ -176,7 +176,8 @@
                 return diff === 0 ? 0 : diff/Math.abs(diff)
             },
             click(item){
-                this.$router.push({name:'TourDetail', params:{idx:item}})
+                console.log('idx step' + item)
+                this.$router.push({name:'TourDetail', params:{idx:item, cate:this.cate}})
             },
         }
     }

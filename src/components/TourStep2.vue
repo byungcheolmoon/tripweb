@@ -109,6 +109,8 @@
 <script>
     import eventBus from "../EventBus"
     import TopBackground from "./Tour_assetsBackgroundTop";
+    import Constant from "../Constant";
+    import CONF from "../Config";
 
     export default {
         name: "tour-step2",
@@ -138,7 +140,7 @@
                     this.Detailbg = 'http://nawara-fish.com/web/trip/images/tour_top_back.jpg';
                     break;
             }
-            console.log('step2:' + this.cate);
+
             console.log('next step')
 
      /*       this.getDataApiDetail()

@@ -18,7 +18,9 @@
                                 <v-layout row wrap>
                                     <v-flex xs12>
                                         <v-card dark color="primary">
-                                            <v-card-text class="px-0">12</v-card-text>
+                                            <v-card-text class="px-0">
+                                                12
+                                            </v-card-text>
                                         </v-card>
                                     </v-flex>
                                     <v-flex v-for="i in 2" :key="`6${i}`" xs6>
@@ -109,8 +111,18 @@
 <script>
     import eventBus from "../EventBus"
     import TopBackground from "./Tour_assetsBackgroundTop";
-    import Constant from "../Constant";
     import CONF from "../Config";
+    import axios from 'axios';
+
+    var DetImgSearch = function(item){
+
+        if(item != 'none'){
+            return 'http://nawara-fish.com/web/trip/src/assets/images/'+item;
+        } else {
+            return 'http://nawara-fish.com/web/trip/images/tour_top_back.jpg';
+
+        }
+    }
 
     export default {
         name: "tour-step2",
@@ -120,81 +132,71 @@
         },
         data: () => ({
             Detailbg :'',
-            content:'text'
+            content:''
         }),
         created(){
             eventBus.$emit('topNavCheck' , false)
 
             // 받은 idx를 서버로 보내 해당 데이터를 모두 가져와 데이터에 넣어 처리한다.
-            switch (this.cate){
-                case 'vietnam':
-                    this.Detailbg = 'http://nawara-fish.com/web/trip/images/tour_top_00.jpg';
-                    break;
-                case 'guam':
-                    this.Detailbg = 'http://nawara-fish.com/web/trip/images/tour_top_01.jpg';
-                    break;
-                case 'thailand':
-                    this.Detailbg = 'http://nawara-fish.com/web/trip/images/tour_top_00.jpg';
-                    break;
-                default :
-                    this.Detailbg = 'http://nawara-fish.com/web/trip/images/tour_top_back.jpg';
-                    break;
-            }
-
-            console.log('next step')
-
-     /*       this.getDataApiDetail()
+            this.getDataApiDetail()
                 .then(data => {
-                    this.title = data.title // 타이틀
-                    this.content = data.content // 콘텐츠
-                    this.titleImg = data.img
-                    if(data.img != 'none'){
-                        this.titleImgCheck = true;
-                    } else {
-                        this.titleImgCheck = false;
-                    }
+                    this.content = data.bo_content
+                    this.Detailbg = DetImgSearch(data.bo_img);
                 })
-*/
         },
         methods:{
             getDataApiDetail () {
                 this.loading = true
                 return new Promise((resolve, reject) => {
+                    let idx = this.idx;
                     var data = new FormData();
-                    data.append('cmd', '1001');
-                    data.append('idx', this.idx);
+                    data.append('cmd', '1005');
+                    data.append('idx', idx);
 
-                    axios.post(CONF.BOARD_INFO, data)
+                    axios.post(CONF.VIEW_DATA, data)
                         .then((response)=>{
-                            var title = response.data.info.title
-                            var content = response.data.info.content
-                            var img     = response.data.info.img
-                            var cate     = response.data.info.cate
-                            var cate_sub     = response.data.info.cate_sub
+                            //console.log(response.data.info);
+                            var bo_idx     = response.data.info.board_idx
+                            var bo_title   = response.data.info.board_title
+                            var bo_img     = response.data.info.board_title_img
+                            var bo_content = response.data.info.board_content
+                            var bo_type    = response.data.info.board_type
+                            var bo_subtype = response.data.info.board_subtype
+
                             setTimeout(() => {
                                 this.loading = false
                                 resolve({
-                                    title,
-                                    content,
-                                    img,
-                                    cate,
-                                    cate_sub
+                                    bo_idx,
+                                    bo_title,
+                                    bo_img,
+                                    bo_content,
+                                    bo_type,
+                                    bo_subtype
                                 })
                             }, 200)
                         })
                 })
             },
-        }
+        },
+
     }
 </script>
 
 <style scoped>
+    #textareaCustom{
+        background-color: white;
+        min-height: 500px;
+        border-bottom:solid 1px rgba(0,0,0,.3);
+        border:solid 1px lightgray;
+        padding:30px;
+        /*box-shadow: 1px 3px 2px rgba(0,0,0,.2);*/
+
+    }
     #airpanel{
         position: absolute;
         top:0px;
         z-index: 2;
         display: block;
-        background-image:url('http://nawara-fish.com/web/trip/images/tour_top_00.jpg');
         background-size: cover;
         width: 850px;
         height: 420px;

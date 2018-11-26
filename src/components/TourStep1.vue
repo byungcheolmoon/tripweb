@@ -42,23 +42,6 @@
             </v-layout>
         </v-container>
 
-        <v-container text-xs-center style="max-width: 1280px; margin-top:10px;">
-            <v-layout>
-                <v-flex xs12>
-                    <v-card color="blue-grey darken-2" class="white--text">
-                        <v-card-title primary-title>
-                            <div>
-                                <div class="headline">걍 샘플로 넣어둔 부분</div>
-                                <span>Listen to your favorite artists and albums whenever and wherever, online and offline.</span>
-                            </div>
-                        </v-card-title>
-                        <v-card-actions>
-                            <v-btn flat dark>Listen now</v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-flex>
-            </v-layout>
-        </v-container>
 
         <v-container text-xs-center style="padding-top:50px;">
             <v-layout  row wrap>

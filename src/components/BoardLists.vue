@@ -256,11 +256,12 @@
                 } else if(value == '베트남') {
                     this.subtitleCheck = false
                     return [
-                        { state: '다낭', abbr: 'm0' },
-                        { state: '다낭소개', abbr: 'm1' },
-                        { state: '다낭상품', abbr: 'm2' },
-                        { state: '호이안소개', abbr: 'm3' },
-                        { state: '호이안상품', abbr: 'm4' },
+                        { state: '전체', abbr: 'm0' },
+                        { state: '베트남소개', abbr: 'm1' },
+                        { state: '다낭소개', abbr: 'm2' },
+                        { state: '다낭상품', abbr: 'm3' },
+                        { state: '호이안소개', abbr: 'm4' },
+                        { state: '호이안상품', abbr: 'm5' },
                     ]
                 } else {
                     return [

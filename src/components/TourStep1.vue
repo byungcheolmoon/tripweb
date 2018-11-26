@@ -121,6 +121,7 @@
         },
         props:['cate'],
         created(){
+            // CATE로 ajax를 날려 각 나라 소개를 긁어와 이미지를 표현해야함
             eventBus.$emit('topNavCheck' , true)
             switch (this.cate){
                 case 'vietnam':

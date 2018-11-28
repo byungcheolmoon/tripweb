@@ -13,8 +13,8 @@
                         <v-layout align-center justify-center>
                             <v-flex xs8>
                                 <v-card height="300px">
-                                    <v-container fill-height>
-                                        <v-layout align-center justify-center>
+                                    <v-container fill-height :style="{ 'background-image': 'url(' + step1Detailbg + ')' }">
+                                        <v-layout align-center justify-center >
                                             <v-card-text>
                                                 <p>{{this.cate}} 이미지</p>
                                             </v-card-text>
@@ -105,6 +105,7 @@
         data: function() {
             return {
                 toptitle :'',
+                step1Detailbg:'',
                 cards: [
                     {idx:9, title: 'Shuttle Chiangmai Airport', author: '셔틀 다낭 공항픽업', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass1.jpg'},
                     {idx:9, title: 'Chiangmai - Luang', author: '다낭-루앙프라방 에어패스', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass2.jpg'},

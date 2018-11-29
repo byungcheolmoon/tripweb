@@ -1,7 +1,7 @@
 <template>
     <div>
         <top-background :val="this.cate"></top-background>
-        <v-container text-xs-center style="max-width: 1280px; margin-top:106px;">
+        <v-container text-xs-center style="max-width: 1280px; margin-top:50px;">
             <v-layout row wrap style="width:1280px !important;">
                 <v-flex xs12  style="position: relative">
                   <div style="color:white; text-shadow: 1px 1px 1px #292c44;" class="display-1 font-weight-medium" >{{this.toptitle}}</div>
@@ -13,10 +13,13 @@
                         <v-layout align-center justify-center>
                             <v-flex xs8>
                                 <v-card height="300px">
-                                    <v-container fill-height :style="{ 'background-image': 'url(' + step1Detailbg + ')' }">
-                                        <v-layout align-center justify-center >
-                                            <v-card-text>
-                                                <p>{{this.cate}} 이미지</p>
+                                    <v-container fill-height id="cateimg" :style="{ 'background-image': 'url(' + step1Detailbg + ')' }">
+                                        <v-layout align-end justify-start >
+                                            <v-card-text style="text-align: left">
+                                                <div id="cateimgTitle">
+                                                    <div class="title font-weight-medium">{{this.cate}}</div>
+                                                    <div class="subheading font-weight-medium">{{this.topcontent}}</div>
+                                                </div>
                                             </v-card-text>
                                         </v-layout>
                                     </v-container>
@@ -99,6 +102,8 @@
     import eventBus from "../EventBus"
     import TopBackground from "./Tour_assetsBackgroundTop";
     import weather from "./utilWeather";
+    import CONF from "../Config";
+    import axios from 'axios';
 
     export default {
         name: "tour-step1",
@@ -106,11 +111,12 @@
             return {
                 toptitle :'',
                 step1Detailbg:'',
+                topcontent:'',
                 cards: [
-                    {idx:9, title: 'Shuttle Chiangmai Airport', author: '셔틀 다낭 공항픽업', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass1.jpg'},
+                    /*{idx:9, title: 'Shuttle Chiangmai Airport', author: '셔틀 다낭 공항픽업', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass1.jpg'},
                     {idx:9, title: 'Chiangmai - Luang', author: '다낭-루앙프라방 에어패스', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass2.jpg'},
                     {idx:9, title: 'Chiang Mai Luang Praban', author: '다낭-루앙프라방패스', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass3.jpg'},
-                    {idx:9, title: 'Chiangmai - Pai Pass', author: '다낭-빠이버스', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass4.jpg'}
+                    {idx:9, title: 'Chiangmai - Pai Pass', author: '다낭-빠이버스', image: 'http://nawara-fish.com/web/trip/src/assets/images/pass4.jpg'}*/
                 ],
                 /*prodShowData:{ box1:'box1', box2:'box2', box3:'box3', box4:'box4', box5:'box5', box6:'box7'},*/
                 selectedCard: -1,
@@ -124,16 +130,17 @@
         created(){
             // CATE로 ajax를 날려 각 나라 소개를 긁어와 이미지를 표현해야함
             eventBus.$emit('topNavCheck' , true)
-            switch (this.cate){
-                case 'vietnam':
-                    return this.toptitle= '다낭, 호이안 최고의 휴향지';
-                case 'guam':
-                    return this.toptitle= '괌 최고의 휴향지';
-                case 'thailand':
-                    return this.toptitle= '방콕, 그리고.. 최고의 휴향지';
-                default :
-                    return this.toptitle= 'TripWith가 추천하는 여행지';
-            }
+            console.log('in')
+
+            this.getDataApiStep1('3001', this.cate)
+                .then(data => {
+                    console.log(data);
+                    this.step1Detailbg = 'http://nawara-fish.com/prc/img/'+data.Img
+                    this.toptitle = data.title
+                    this.topcontent = data.content
+                    this.cards = data.pass
+                })
+
         },
         methods:{
             hoverCard(selectedIndex) {
@@ -164,12 +171,57 @@
                 console.log('idx step' + item)
                 this.$router.push({name:'TourDetail', params:{idx:item, cate:this.cate}})
             },
+
+            getDataApiStep1 (cmd, param1) {
+                this.loading = true
+                return new Promise((resolve, reject) => {
+                    var data = new FormData();
+                    data.append('cmd', cmd);
+                    data.append('cate', param1);
+
+                    axios.post(CONF.VIEW_DATA, data)
+                        .then((response)=>{
+                            //console.log(response.data.pass);
+                            var idx     = response.data.info.board_idx
+                            var Img     = response.data.info.board_title_img
+                            var title   = response.data.info.board_title
+                            var content     = response.data.info.board_content
+                            var pass = response.data.pass
+                            setTimeout(() => {
+                                this.loading = false
+                                resolve({
+                                    idx,
+                                    Img,
+                                    title,
+                                    content,
+                                    pass
+                                })
+                            }, 200)
+                        })
+                })
+            }
+
+
         }
     }
 </script>
 
 <style scoped>
     @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+    #cateimgTitle{
+        text-shadow: 1px 1px 1px #292c44;
+        position: relative;
+        color:white;
+
+
+    }
+
+    #cateimg{
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+    }
 
     .card-row {
         display: flex;

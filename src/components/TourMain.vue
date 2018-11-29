@@ -84,7 +84,7 @@
 <style scoped>
 
     .nav_tour_table{
-        position: absolute; top:200px; height: 400px; vertical-align: middle; border:none;
+        position: absolute; top:70px; height: 400px; vertical-align: middle; border:none;
     }
     .nav_tour_table tr td{
         border : none;

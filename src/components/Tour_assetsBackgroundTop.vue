@@ -12,7 +12,7 @@
         created(){
             switch (this.val){
                 case 'vietnam':
-                    return this.tourbg = 'http://nawara-fish.com/web/trip/images/tour_top_00.jpg';
+                    return this.tourbg = 'http://nawara-fish.com/web/trip/images/viettop.jpg';
                 case 'guam':
                     return this.tourbg = 'http://nawara-fish.com/web/trip/images/tour_top_01.jpg';
                 case 'thailand':
@@ -34,7 +34,7 @@
         width: 100%;
         z-index: 0;
         margin-top: -50px;
-        height: 460px;
+        height: 400px;
         opacity: 1;
         position: absolute;
         top:-14px;

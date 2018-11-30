@@ -10,7 +10,24 @@
 
                 <v-flex xs12  style="position: relative">
                     <div id="airpanel" :style="{ 'background-image': 'url(' + Detailbg + ')' }">
+
+
                         <div style="position: inherit; top:430px; min-width: 850px; color:black; text-align: left">
+
+                                <vue-ctk-date-time-picker
+                                        v-model=datevalue
+                                        range-mode
+                                        overlay-background
+                                        color="purple"
+                                        enable-button-validate
+                                        format="YYYY-MM-DD"
+                                        formatted="YYYY년 MMM D일 ddd "
+                                        label="여행일정을 선택해주세요."
+                                        inline
+                                />
+
+
+                            <v-btn @click="testclick">text</v-btn>
 
                             <div id="textareaCustom" v-html="this.content"></div>
 
@@ -114,6 +131,9 @@
     import CONF from "../Config";
     import axios from 'axios';
 
+    import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
+    import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.min.css';
+
     var DetImgSearch = function(item){
 
         if(item != 'none'){
@@ -128,14 +148,27 @@
         name: "tour-step2",
         props:['idx','cate'],
         components: {
-            TopBackground
+            TopBackground, VueCtkDateTimePicker
         },
         data: () => ({
+            datevalue:{start:'2018-11-30',end:'2018-11-30'},
             Detailbg :'',
-            content:''
+            content:'',
+//            shortcuts: {
+//                "this_week": "1박 2일",
+//                "last_4_days": "7일",
+//            }
         }),
         created(){
-            eventBus.$emit('topNavCheck' , false)
+            var currentDate = new Date();
+            var month = currentDate.getMonth() + 1;
+            var day = currentDate.getDate();
+            var year = currentDate.getFullYear();
+
+            this.datevalue.start = year + "-" + month + "-" + day;
+            this.datevalue.end = year + "-" + month + "-" + day;
+
+            eventBus.$emit('topNavCheck' , true)
 
             // 받은 idx를 서버로 보내 해당 데이터를 모두 가져와 데이터에 넣어 처리한다.
             this.getDataApiDetail()
@@ -145,6 +178,9 @@
                 })
         },
         methods:{
+            testclick(){
+                console.log(this.datevalue)
+            },
             getDataApiDetail () {
                 this.loading = true
                 return new Promise((resolve, reject) => {
@@ -189,7 +225,7 @@
         border-bottom:solid 1px rgba(0,0,0,.3);
         border:solid 1px lightgray;
         padding:30px;
-        width: 900px !important;
+        width: 850px !important;
         overflow: hidden;
         object-fit: cover;
         /*box-shadow: 1px 3px 2px rgba(0,0,0,.2);*/

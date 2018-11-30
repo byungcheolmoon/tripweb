@@ -42,23 +42,22 @@
         </v-navigation-drawer>
 
 
-        <v-container text-xs-center style="margin-top:0px; padding-top:0px; padding-bottom:0px; max-width: 1280px; ">
+        <v-container text-xs-center style="margin-top:0px; padding-top:0px; padding-bottom:0px; max-width: 1400px; ">
 
             <v-layout row wrap>
                 <v-flex xs12  offset-xs>
 
                     <v-toolbar :dark="topNavColorBind" v-bind:color="topNavColor()" flat>
 
-                        <v-toolbar-title v-text="title" @click="homeClick" style="margin-right:50px;"></v-toolbar-title>
+                        <v-toolbar-title v-text="title" @click="homeClick"></v-toolbar-title>
 
-                        <v-menu :nudge-width="100" transition="slide-x-transition">
+                        <v-menu class="topscale" :nudge-width="100" transition="slide-x-transition">
                             <v-toolbar-title slot="activator">
-                                <span>All</span>
-                                <v-icon>arrow_drop_down</v-icon>
+                                <span class="pl-5 pr-3 subheading">여행지정보<v-icon>arrow_drop_down</v-icon></span>
                             </v-toolbar-title>
                             <v-list>
                                 <v-list-tile
-                                        v-for="item in itemtopmenu"
+                                        v-for="item in menu1"
                                         :key="item"
                                 >
                                     <v-list-tile-title v-text="item" ></v-list-tile-title>
@@ -66,12 +65,41 @@
                             </v-list>
                         </v-menu>
 
-                        <v-toolbar-items class="hidden-sm-and-down">
-                            <v-btn flat  to="/TourMain">Tour</v-btn>
-                            <v-btn flat @click="changeNavC" to="/linktest">Product</v-btn>
-                            <v-btn @click="changeNavC" flat to="/test">test</v-btn>
-                            <v-btn @click="changeNavC" flat v-bind:to="{ name: 'boardNoticeList'}">Board</v-btn>
+                        <v-menu class="topscale" :nudge-width="100" transition="slide-x-transition">
+                            <v-toolbar-title slot="activator">
+                                <span class="pl-3 pr-3 subheading">데이투어<v-icon>arrow_drop_down</v-icon></span>
+                            </v-toolbar-title>
+                            <v-list>
+                                <v-list-tile to="/TourMain"
+                                             v-for="item in menu1"
+                                             :key="item"
+                                >
+                                    <v-list-tile-title  v-text="item" ></v-list-tile-title>
+                                </v-list-tile>
+                            </v-list>
+                        </v-menu>
+
+                        <v-menu class="topscale" :nudge-width="100" transition="slide-x-transition">
+                            <v-toolbar-title slot="activator">
+                                <span class="pl-3 pr-3 subheading">커뮤니티<v-icon>arrow_drop_down</v-icon></span>
+                            </v-toolbar-title>
+                            <v-list>
+                                <v-list-tile to="/TourMain"
+                                             v-for="item in menu1"
+                                             :key="item"
+                                >
+                                    <v-list-tile-title  v-text="item" ></v-list-tile-title>
+                                </v-list-tile>
+                            </v-list>
+                        </v-menu>
+
+                        <v-toolbar-items class="hidden-sm-and-down mt-1">
+                            <v-btn flat ><div class="topscale subheading">큐레이팅신청</div></v-btn>
+                            <v-btn flat ><div class="topscale subheading">동행</div></v-btn>
+                            <v-btn flat ><div class="topscale subheading">회사소개</div></v-btn>
                         </v-toolbar-items>
+
+
 
                         <v-spacer></v-spacer>
                         <v-toolbar-side-icon @click.stop="drawer = !drawer" v-show="this.$session.get('id') == 'orinwangja@naver.com'"></v-toolbar-side-icon>
@@ -122,6 +150,8 @@
             topNavColorBind:false,
             title: "Tripwith56",
             itemtopmenu: ["All", "Family", "Friends", "Coworkers"],
+            menu1:['태국','베트남','괌','일본','중국','필리핀'],
+            menu2:['리뷰','QnA'],
             localitems: [],
             localnickname: "",
             dialog: false,
@@ -225,5 +255,21 @@
     };
 </script>
 <style scoped>
+.topscale{
+    font-size:16px;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+    -ms-transition: 0.5s;
+    transition: 0.15s;
+}
+
+.topscale:hover{
+    -webkit-transform: scale(1.5,1.5);
+    -moz-transform: scale(1.5,1.5);
+    -o-transform: scale(1.5,1.5);
+    -ms-transform: scale(1.5,1.5);
+    transform: scale(1.2,1.2);
+}
 
 </style>

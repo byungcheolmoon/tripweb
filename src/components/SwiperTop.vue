@@ -108,10 +108,10 @@ export default {
   background-size: cover;
   background-position: center;
   &.slide-1 {
-    background-image: url("../assets/images/1.jpg");
+    background-image: url("../assets/images/mol1.png");
   }
   &.slide-2 {
-    background-image: url("../assets/images/2.jpg");
+    background-image: url("../assets/images/mo1.jpg");
   }
   &.slide-3 {
     background-image: url("../assets/images/3.jpg");

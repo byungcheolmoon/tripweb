@@ -74,7 +74,7 @@
         },
         methods:{
             linkTourBtn(item){
-                this.$router.push({name:'TourPass', params:{ cate:item }})
+                this.$router.push({name:'TourPass', query:{ cate:item }})
             },
 
         }

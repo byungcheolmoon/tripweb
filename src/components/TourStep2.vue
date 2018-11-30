@@ -189,9 +189,14 @@
         border-bottom:solid 1px rgba(0,0,0,.3);
         border:solid 1px lightgray;
         padding:30px;
+        width: 900px !important;
+        overflow: hidden;
+        object-fit: cover;
         /*box-shadow: 1px 3px 2px rgba(0,0,0,.2);*/
 
     }
+
+
     #airpanel{
         position: absolute;
         top:0px;

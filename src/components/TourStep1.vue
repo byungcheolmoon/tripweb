@@ -109,6 +109,7 @@
         name: "tour-step1",
         data: function() {
             return {
+                cate:'',
                 toptitle :'',
                 step1Detailbg:'',
                 topcontent:'',
@@ -126,12 +127,11 @@
         components: {
             TopBackground, weather
         },
-        props:['cate'],
         created(){
             // CATE로 ajax를 날려 각 나라 소개를 긁어와 이미지를 표현해야함
-            eventBus.$emit('topNavCheck' , true)
-            console.log('in')
 
+            eventBus.$emit('topNavCheck' , true)
+            this.cate  = this.$route.query.cate;
             this.getDataApiStep1('3001', this.cate)
                 .then(data => {
                     console.log(data);

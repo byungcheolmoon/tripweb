@@ -16,6 +16,26 @@ module.exports = {
         }
     }
 }
+/*
+module.exports = {
+    //baseUrl: '/web/trip/dist/',
+    lintOnSave: false,
+    devServer: {
+        host: '182.162.22.21',
+        port: 9090,
+        proxy: { // proxyTable 설정
+            '/naver': {
+                target: 'https://nid.naver.com/oauth2.0/authorize',
+                changeOrigin: true,
+                pathRewrite: {
+                    '' : ''
+                }
+            }
+        }
+    }
+}
+*/
+
 
 /*module.exports = {
     entry: {

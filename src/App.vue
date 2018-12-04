@@ -2,7 +2,7 @@
   <v-app style="min-width: 1280px">
     <!--<img id="topImage" src="@/assets/images/tour_top_back.jpg" alt="Vuetify.js" class="mb-5">-->
     <top-navs id="topnavsz"></top-navs>
-    <v-content>
+    <v-content style="background-color: white">
       <v-container fluid class="pl-0 pr-0 pt-0" style="background: #ffffff !important;">
         <router-view></router-view>
       </v-container>

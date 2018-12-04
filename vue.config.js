@@ -1,22 +1,23 @@
+//
+// module.exports = {
+//     //baseUrl: '/web/trip/dist/',
+//     lintOnSave: false,
+//     devServer: {
+//         host: '0.0.0.0',
+//         port: 8080,
+//         proxy: { // proxyTable 설정
+//             '/naver': {
+//                 target: 'https://nid.naver.com/oauth2.0/authorize',
+//                 changeOrigin: true,
+//                 pathRewrite: {
+//                     '' : ''
+//                 }
+//             }
+//         }
+//     }
+// }
 
-module.exports = {
-    //baseUrl: '/web/trip/dist/',
-    lintOnSave: false,
-    devServer: {
-        host: '0.0.0.0',
-        port: 8080,
-        proxy: { // proxyTable 설정
-            '/naver': {
-                target: 'https://nid.naver.com/oauth2.0/authorize',
-                changeOrigin: true,
-                pathRewrite: {
-                    '' : ''
-                }
-            }
-        }
-    }
-}
-/*
+
 module.exports = {
     //baseUrl: '/web/trip/dist/',
     lintOnSave: false,
@@ -34,8 +35,6 @@ module.exports = {
         }
     }
 }
-*/
-
 
 /*module.exports = {
     entry: {

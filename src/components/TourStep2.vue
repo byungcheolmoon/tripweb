@@ -448,8 +448,8 @@
                         </v-container>
 
 
-
-                        <v-container fill-height grid-list-md text-xs-left class="pl-0 pr-0 mb-0">
+                        <div id="lasttap">asdf</div>
+                        <v-container fill-height grid-list-md text-xs-left class="pl-0 pr-0 mb-0" >
                             <v-layout row wrap align-center justify-start>
                                 <v-flex xs12 class="mt-3 mb-2">
                                     <p class="mb-0 headline">이 상품을 본 여행자가 함께 본 상품</p>
@@ -622,6 +622,8 @@
         }
     }
 
+
+
     export default {
         name: "tour-step2",
         props:['idx','cate'],
@@ -788,8 +790,14 @@
                     this.content = data.bo_content
                     this.Detailbg = DetImgSearch(data.bo_img);
                 })
+            this.$nextTick(function() {
+                var divEl = $("#lasttap");
+                var divX = divEl.offset().left;
+                console.log(divX);
+            });
 
         },
+
         methods:{
             middleopen(){
                 console.log('in');

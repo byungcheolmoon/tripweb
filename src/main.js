@@ -46,6 +46,9 @@ import TourMain from './components/TourMain';
 import TourStep1 from './components/TourStep1';
 import TourStep2 from './components/TourStep2';
 
+import VueYoutube from 'vue-youtube'
+
+Vue.use(VueYoutube)
 
 Vue.use(VueVideoPlayer, /* {
   options: global default options,

@@ -19,7 +19,7 @@
 
 
 module.exports = {
-    //baseUrl: '/web/trip/dist/',
+    baseUrl: '/web/trip/dist/',
     lintOnSave: false,
     devServer: {
         host: '182.162.22.21',

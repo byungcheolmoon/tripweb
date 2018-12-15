@@ -102,11 +102,12 @@
 
 
                         <v-spacer></v-spacer>
-                        <v-toolbar-side-icon @click.stop="drawer = !drawer" v-show="this.$session.get('id') == 'orinwangja@naver.com'"></v-toolbar-side-icon>
+                        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
 
-                        <v-toolbar-items class="hidden-sm-and-down" v-show="this.$session.get('nickname') != null">
+
+                        <!--<v-toolbar-items class="hidden-sm-and-down" v-show="this.$session.get('nickname') != null">
                             <v-btn flat>{{this.$session.get('nickname')}}님 어서오세요</v-btn>
-                        </v-toolbar-items>
+                        </v-toolbar-items>-->
 
                         <v-toolbar-items class="hidden-sm-and-down">
                             <!--<v-btn icon> <v-icon>search</v-icon> </v-btn>-->

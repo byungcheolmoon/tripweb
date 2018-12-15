@@ -141,13 +141,17 @@
 
     export default {
         name: "board-list",
-        props: ['mode', 'type', 'idx'],
         components:{
             VueEditor, BreadCustom
         },
         data() {
             return {
                 files:[],
+                mode:'',
+                type:'',
+                idx:'',
+
+
                 localmode : '',
                 boardTitle:'',
                 Detailbg :'http://nawara-fish.com/web/trip/src/assets/images/tour_2_01.jpg',
@@ -210,7 +214,15 @@
             }
         },
         created(){
+            if(this.$route.query){
+                this.idx = this.$route.query.idx
+                this.mode = this.$route.query.mode
+            }
+            this.localmode     = this.mode;
             this.skinselect = this.currentskin
+
+
+
 
             this.getDataApi()
                 .then(data => {
@@ -218,7 +230,6 @@
                 })
 
             if(this.idx){
-                // 이미지 액션으로 보내서 따로 이미지 받아 배열로 저장 넘길 파라미터 idx 보내면되지뭐
                 this.getBoardApi()
                     .then(data => {
                         switch (data.skin){
@@ -234,7 +245,12 @@
                         this.select          = data.cate_sub
                         this.titleImg        = data.img
                         this.editorcontent  = data.content
-
+                        this.localimgs       = data.imglist
+                        if(data.img != 'none'){
+                            this.titleImgCheck = true;
+                        } else {
+                            this.titleImgCheck = false;
+                        }
                     })
             }
         },

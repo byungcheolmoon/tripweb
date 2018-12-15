@@ -12,7 +12,7 @@ export default {
         isloading : false,
         BoardPage:{ pageno : 1 },
         Boardpcheck: false,
-        primcode:'',
+        primcode:null,
     },
     //plugins: [createPersistedState()],
     mutations: {
@@ -31,6 +31,9 @@ export default {
         },
         [Constant.BOARD_CURRENT_SKIN]:(state, payload) => {
             state.currentskin = payload
+        },
+        [Constant.PRIM_CODE]:(state, payload) => {
+          state.primcode = payload.primcode
         }
     },
     actions: {

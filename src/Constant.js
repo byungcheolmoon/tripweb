@@ -26,5 +26,7 @@ export default {
     BOARD_CURRENT_VIEW : "boardCurrentView",
     BOARD_CURRENT_SKIN : "boardCurrentSkin",
 
+    BOARD_ADMIN_FETCH_DETAIL : "boardAdminFetchDetail",
+
     PRIM_CODE : "primCode",
 }

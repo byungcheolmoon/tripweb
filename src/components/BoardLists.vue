@@ -222,12 +222,12 @@
 
             },
             newBoardWrite(){
-                //this.$router.push({ name :"boardsEditor", params:{ mode:'add' }})
-                this.$router.push({path:'/editor', query:{mode:'add'}})
+                this.$router.push({ name :"boardsEditor", params:{ mode:'add' }})
+                //this.$router.push({path:'/editor', query:{mode:'add'}})
             },
             BoardEdit(item){
-                //this.$router.push({ name :"boardsEditor", params:{ idx:item, mode:'edit'}})
-                this.$router.push({path:'/editor', query:{idx:item, mode:'edit'}})
+                this.$router.push({ name :"boardsEditor", params:{ idx:item, mode:'edit'}})
+                //this.$router.push({path:'/editor', query:{idx:item, mode:'edit'}})
             },
             submitBtn(){
                 if(this.select.state == '공지사항'){

@@ -1,7 +1,7 @@
 <template>
 
         <v-flex xs6 d-flex>
-            <v-breadcrumbs>
+            <v-breadcrumbs >
                 <v-breadcrumbs-item>
                     Board
                 </v-breadcrumbs-item>

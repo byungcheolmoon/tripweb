@@ -1,162 +1,304 @@
 <template>
     <div>
-        <v-container>
-           <bread-custom></bread-custom>
+        <v-container style="width: 850px !important;">
+            <bread-custom></bread-custom>
+            <v-layout style="border-top:solid 1px lightgray" class="pt-4">
+                <v-flex xs12 class="pa-3">
 
+                    <v-text-field
+                            label="타이틀"
+                            flat
+                            v-model="writetest.text"
+                            background-color="#ffffff"
+                            height="60px"
+                    ></v-text-field>
 
-                <v-text-field
-                        label="제목"
-                        flat
-                        v-model="writetest.text"
-                        single-line
-                        background-color="#ffffff"
-                        height="60px"
-                ></v-text-field>
+                    <v-combobox
+                            v-model="select"
+                            :items="proditems"
+                            :rules="[v => !!v || 'Item is required']"
+                            label="소분류 선택해주세요."
+                            chips
+                            @input="itemschange"
+                    ></v-combobox>
 
-                <v-combobox
-                        v-model="select"
-                        :items="proditems"
-                        :rules="[v => !!v || 'Item is required']"
-                        label="소분류 선택해주세요."
+                    <v-combobox
+                            v-model="skinselect"
+                            :items="skinitems"
+                            :rules="[v => !!v || 'Item is required']"
+                            label="글타입 선택해주세요."
+                            chips
+                            :readonly="editcheck()"
+                            @input="skinchange"
+                    ></v-combobox>
 
-                        chips
-                        @input="itemschange"
-                ></v-combobox>
-            <v-flex  xs12 sm4 offset-sm4  d-flex v-if="this.titleImgCheck == true">
-                <v-card>
-                    <v-img
-                            class="white--text"
-                            height="400px"
-                            :src="this.titleImg"
-                    >
-                        <v-container fill-height fluid>
-                            <v-layout fill-height>
-                                <v-flex xs12 align-end flexbox>
-                                    <span class="headline">TITLE SAMPLE</span>
-                                </v-flex>
-                            </v-layout>
-                        </v-container>
-                    </v-img>
-                    <v-card-title>
-                        <div>
-                            <span class="grey--text">Number 10</span><br>
-                            <span>Whitehaven Beach</span><br>
-                            <span>Whitsunday Island, Whitsunday Islands</span>
-                        </div>
-                    </v-card-title>
-                    <v-card-actions>
-                        <v-btn flat color="orange" @click="imgdel">DELETE</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-flex>
-                <input ref="photofile" type="file" name='uploadedfile' class="pa-3"/>
-                <v-divider light></v-divider>
-                <br>
+                </v-flex>
+            </v-layout>
 
-
-            <div id="boardheight">
-                <div id="editor1"></div>
-            </div>
-            <br>
-
-            <v-btn block @click="clicks"  :disabled="!valid" color="secondary" block> submit </v-btn>
-
-
+            <v-divider class="mb-3 mt-3" light></v-divider>
+                <div id="boardheight" v-if="skinselect == '중단'">
+                    <vue-editor id="editor"
+                                useCustomImageHandler
+                                @imageAdded="handleImageAdded"
+                                :customModules="customModulesForEditor"
+                                :editorOptions="editorSettings"
+                                v-model="editorcontent">
+                    </vue-editor>
+                    <v-btn block @click="clicks"  :disabled="!valid" color="secondary" block> 글 저장 </v-btn>
+                </div>
 
         </v-container>
+
+        <v-container v-if="skinselect == '상단'" style="width: 1400px">
+            <v-layout align-center justify-center row fill-height>
+                <v-flex xs7 class="pr-1" >
+                    <v-tabs
+                            v-model="active"
+                            color="cyan"
+                            dark
+                            slider-color="yellow"
+                    >
+                        <v-tab ripple >
+                            Photo
+                        </v-tab>
+                        <v-tab ripple >
+                            Video
+                        </v-tab>
+                        <v-tab-item :key="1">
+                            <v-card flat :style="{ 'background-image': 'url(' + Detailbg + ')' }" id="topcardtag">
+                            </v-card>
+                        </v-tab-item>
+                        <v-tab-item :key="2">
+                            <v-card flat style="height:420px">
+                                <youtube width="100%" height="420px" :video-id="videoId" :player-vars="playerVars" @playing="playing"></youtube>
+                            </v-card>
+                        </v-tab-item>
+                    </v-tabs>
+                    <v-btn block @click="clicks"  :disabled="!valid" color="secondary" block> 글 저장 </v-btn>
+                </v-flex>
+                <v-flex xs5>
+                    <v-layout>
+                        <v-flex xs12 >
+                            <v-card style="width: 400px;" class="ml-3">
+                                <v-container grid-list-sm fluid >
+                                    <v-layout row wrap >
+                                        <v-flex v-for="(img, i, z) in localimgs" :key="i" xs4 d-flex>
+                                            <v-card flat tile class="d-flex" >
+                                                <v-img :src="img"  v-if="img != 'none'" aspect-ratio="1" class="grey lighten-2" @click="imgChange(z + 1, img)">
+                                                    <v-layout
+                                                            slot="placeholder"
+                                                            fill-height
+                                                            align-center
+                                                            justify-center
+                                                            ma-0
+                                                    >
+
+                                                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                                                    </v-layout>
+                                                </v-img>
+                                                <v-img src="http://nawara-fish.com/web/trip/src/assets/images/noimg.png"  v-else aspect-ratio="1" class="grey lighten-2" @click="imgChange(z + 1, img)">
+                                                    <v-layout
+                                                            slot="placeholder"
+                                                            fill-height
+                                                            align-center
+                                                            justify-center
+                                                            ma-0
+                                                    >
+                                                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                                                    </v-layout>
+                                                </v-img>
+                                            </v-card>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-container>
+                            </v-card>
+                        </v-flex>
+                    </v-layout>
+                </v-flex>
+            </v-layout>
+        </v-container>
+        <router-view></router-view>
     </div>
 </template>
 
 <script>
+    import { VueEditor } from "vue2-editor";
+    import { ImageDrop } from "quill-image-drop-module";
+    import ImageResize from "quill-image-resize-module";
     import { mapState } from "vuex";
     import Constant from "../Constant";
     import CONF from "../Config";
     import axios from 'axios';
-    import { createEditor } from 'vueditor'
-    import 'vueditor/dist/style/vueditor.min.css'
     import BreadCustom from './breadcrumbsCu'
 
-    var inst;
-
     export default {
-
         name: "board-list",
-        props: ['mode', 'type', 'idx'],
         components:{
-            BreadCustom
+            VueEditor, BreadCustom
         },
-        data: function() {
+        data() {
             return {
+                mode:'',
+                type:'',
+                idx:'',
+
+
                 localmode : '',
                 boardTitle:'',
+                Detailbg :'http://nawara-fish.com/web/trip/src/assets/images/tour_2_01.jpg',
+
+                videoId: 'L1q3_XZ27N4',
+                active: null,
+                playerVars: {
+                    autoplay: 0
+                },
+
+                // 상단, 이미지
+                localimgs :{
+                    img_1:'none',
+                    img_2:'none',
+                    img_3:'none',
+                    img_4:'none',
+                    img_5:'none',
+                    img_6:'none',
+                    img_7:'none',
+                    img_8:'none',
+                    img_9:'none'
+                },
+
+                // 글제목 및 내용
                 writetest : {text:''},
+                editorcontent: '',
+
+                // 콤보박스 유효성 검사
                 valid: true,
-                tags: {},
+
+                // 썸네일 이미지
+                titleImg: '',
+                titleImgCheck: false,
+
+                // 글 분류
                 select: null,
                 proditems:[],
-                titleImg: '',
-                titleImgCheck: false
+
+                // 글 타입
+                skintype:'2',
+                skinselect:null,
+                skinitems:['상단','중단','하단'],
+
+                customToolbar: [
+                    ['bold', 'italic', 'underline'],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    ['image', 'code-block']
+                ],
+                customModulesForEditor: [
+                    { alias: "imageDrop", module: ImageDrop },
+                    { alias: "imageResize", module: ImageResize }
+                ],
+                editorSettings: {
+                    modules: {
+                        imageDrop: true,
+                        imageResize: {},
+                    }
+                },
+
             }
         },
         created(){
+            if(this.$route.query){
+                this.idx = this.$route.query.idx
+                this.mode = this.$route.query.mode
+            }
+            this.localmode     = this.mode;
+            this.skinselect = this.currentskin
+
+            this.primcode()
+
             this.getDataApi()
                 .then(data => {
                     this.proditems = data.items
                 })
-        },
-        computed:{
-            ...mapState({
-                currentview : state => state.board.currentview
-            }),
-        },
-        mounted(){
-            this.localmode = this.mode;
-
-            // console.log(this.currentview)
-            // console.log(this.idx)
-
-            inst = createEditor('#editor1', {
-                uploadUrl: '',
-                id: 'someid',
-                classList: ['someclass'],
-            })
-            inst.upload = function (obj, callback) {
-                let formData = new FormData();
-                let xhr = new XMLHttpRequest();
-                formData.append('image', obj.files[0]);
-                formData.append('cmd', '2000');
-                xhr.open('POST', 'http://nawara-fish.com/web/vueajax/board.php');
-                xhr.send(formData);
-                xhr.onload = function () {
-                    callback(xhr.response);
-                };
-                xhr.onerror = function (err) {
-                    console.log(err);
-                }
-            }
 
             if(this.idx){
                 this.getBoardApi()
                     .then(data => {
+                        switch (data.skin){
+                            case '1' : this.skinselect = '상단'
+                                break;
+                            case '2' : this.skinselect = '중단'
+                                break;
+                            case '3' : this.skinselect = '하단'
+                                break;
+                            default : this.skinselect = '중단'
+                        }
                         this.writetest.text = data.title
-                        this.select = data.cate_sub
-                        inst.setContent(data.content);
-                        this.titleImg = data.img
+                        this.select          = data.cate_sub
+                        this.titleImg        = data.img
+                        this.editorcontent  = data.content
+                        this.localimgs       = data.imglist
                         if(data.img != 'none'){
                             this.titleImgCheck = true;
                         } else {
                             this.titleImgCheck = false;
                         }
                     })
-
             }
-
+        },
+        computed:{
+            ...mapState({
+                currentview : state => state.board.currentview,
+                currentskin : state => state.board.currentskin,
+                stateprimcode : state => state.board.primcode
+            }),
+        },
+        watch:{
+            currentskin:function (newCon) {
+                this.skinselect = newCon
+            }
         },
         methods: {
+            primcode(){
+                let nowDate = new Date()
+                let mkTime = nowDate.getTime();
+                let mkYear =  nowDate.getFullYear();
+                let dd = nowDate.getDate();
+                let mm = nowDate.getMonth()+1; //January is 0!
+                let primMake = String(mkYear) + String(mm) + String(dd) + String(mkTime);
+                console.log(primMake)
+
+                // 이거만들어서 인서트할때 찾아서 인서트한 보드넘버로 업데이트 해주기
+
+
+            },
+            imgChange(value, imgvalue){
+                console.log(imgvalue)
+                this.$router.push({ name: 'EditPhoto', params: { imgno: value, idx: this.idx, imgvalue: imgvalue, mode:this.mode } })
+            },
+            playing() {
+                console.log('\o/ we are watching!!!')
+            },
+            editcheck(){
+              if(this.mode == 'edit'){
+                  return true
+              } else {
+                  return false
+              }
+            },
+            handleImageAdded: function(file, Editor, cursorLocation, resetUploader) {
+                let formData = new FormData();
+                formData.append('image', file);
+                formData.append('cmd', '2000');
+                 this.loading = true
+                 axios.post(CONF.BOARD_INFO, formData)
+                     .then((response)=>{
+                         this.loading = false
+                         Editor.insertEmbed(cursorLocation, "image", response.data);
+                         resetUploader();
+                     })
+            },
             clicks() {
                 var title = this.writetest.text;
                 var tag   = this.select;
-                var file = this.$refs.photofile.files[0];
                 var cCate = this.currentview;
                 var subidx;
                 var subMode;
@@ -167,53 +309,26 @@
                     subMode = '3001';
                     subidx = this.idx;
                 }
-                if(file){
-                    setTimeout(function() {
-                        let content = inst.getContent();
-                        var data = new FormData();
-                        data.append('cmd', subMode);
-                        data.append('idx', subidx);
-                        data.append('uploadedfile', file);
-                        data.append('title', title);
-                        data.append('cate_sub', tag);
-                        data.append('content', content);
-                        data.append('cate', cCate);
-                        axios.post(CONF.BOARD_INFO, data)
-                            .then((response)=>{
-                                this.loading = false
-                                console.log(response);
-                            })
-                    }, 1000);
-                } else {
-                    setTimeout(function() {
-                        let content = inst.getContent();
-                        var data = new FormData();
-                        data.append('cmd', subMode);
-                        data.append('idx', subidx);
-                        data.append('title', title);
-                        data.append('cate_sub', tag);
-                        data.append('content', content);
-                        data.append('cate', cCate);
-                        axios.post(CONF.BOARD_INFO, data)
-                            .then((response)=>{
-                                this.loading = false
-                                console.log(response);
-                            })
-                    }, 1000);
-                }
-
-
+                setTimeout(function() {
+                    let content = this.editorcontent;
+                    var data = new FormData();
+                    data.append('cmd', subMode);
+                    data.append('idx', subidx);
+                    data.append('title', title);
+                    data.append('cate_sub', tag);
+                    data.append('content', content);
+                    data.append('cate', cCate);
+                    axios.post(CONF.BOARD_INFO, data)
+                        .then((response)=>{
+                            this.loading = false
+                            // 저장완료시 처리해야할 부분
+                        })
+                }, 1000);
             },
-            imgdel(){
-                this.titleImgCheck = false
-                var data = new FormData();
-                data.append('cmd', '5000');
-                data.append('idx', this.idx)
-                axios.post(CONF.BOARD_INFO, data)
-                    .then(()=>{})
+            skinchange(e){
+                this.$store.dispatch(Constant.BOARD_CURRENT_SKIN,{skin:e})
             },
             itemschange(e){
-                this.tags = this.select
             },
             getDataApi () {
                 this.loading = true
@@ -244,19 +359,25 @@
 
                     axios.post(CONF.BOARD_INFO, data)
                         .then((response)=>{
-                            var title = response.data.info.title
-                            var content = response.data.info.content
-                            var img     = response.data.info.img
+                            var skin     = response.data.info.skintype
+                            var title    = response.data.info.title
+                            var content  = response.data.info.content
+                            var img      = response.data.info.img
                             var cate     = response.data.info.cate
-                            var cate_sub     = response.data.info.cate_sub
+                            var cate_sub = response.data.info.cate_sub
+                            var imglist  = response.data.imglist
+                            var imgcount = response.data.info.img_count
                             setTimeout(() => {
                                 this.loading = false
                                 resolve({
+                                    skin,
                                     title,
                                     content,
                                     img,
                                     cate,
-                                    cate_sub
+                                    cate_sub,
+                                    imglist,
+                                    imgcount
                                 })
                             }, 200)
                         })
@@ -266,7 +387,28 @@
     };
 </script>
 <style scoped>
+    .filebox label { display: inline-block; padding: .5em .60em; color: #999; font-size: inherit; line-height: normal; vertical-align: middle; background-color: #fdfdfd; cursor: pointer; }
     #boardheight{
-        height:450px;
+        min-height:400px;
+    }
+    #topcardtag{
+        height:420px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+    }
+    .adminfloat{
+        position: fixed;
+        right: 59%;
+        top: 200px;
+        margin-right: -720px;
+        text-align:center;
+        width: 300px;
+        z-index:5;
+
+        background-color: white;
+        color : black;
+        border: solid 1px lightgray;
+        border-radius: 6px;
     }
 </style>

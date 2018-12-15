@@ -108,7 +108,7 @@
                 totalDesserts: 0,
                 desserts: [],
                 loading: true,
-                pagination: { page: 1, totalItems:'', rowsPerPage:'2', totalpages:0 },
+                pagination: { page: 1, totalItems:'', rowsPerPage:'5', totalpages:0 },
                 headers: [
                     { align:'center', text: 'idx', value: 'board_idx' },
                     { align:'center', text: 'title', value: 'board_title' },
@@ -222,10 +222,12 @@
 
             },
             newBoardWrite(){
-                this.$router.push({ name :"boardsEditor", params:{ mode:'add' }})
+                //this.$router.push({ name :"boardsEditor", params:{ mode:'add' }})
+                this.$router.push({path:'/editor', query:{mode:'add'}})
             },
             BoardEdit(item){
-                this.$router.push({ name :"boardsEditor", params:{ idx:item, mode:'edit'}})
+                //this.$router.push({ name :"boardsEditor", params:{ idx:item, mode:'edit'}})
+                this.$router.push({path:'/editor', query:{idx:item, mode:'edit'}})
             },
             submitBtn(){
                 if(this.select.state == '공지사항'){

@@ -94,9 +94,9 @@
                         </v-menu>
 
                         <v-toolbar-items class="hidden-sm-and-down mt-1">
-                            <v-btn flat ><div class="topscale subheading">큐레이팅신청</div></v-btn>
-                            <v-btn flat ><div class="topscale subheading">동행</div></v-btn>
-                            <v-btn flat ><div class="topscale subheading">회사소개</div></v-btn>
+                            <v-btn flat to="/test"><div class="topscale subheading">큐레이팅신청</div></v-btn>
+                            <v-btn flat to="/test1"><div class="topscale subheading">동행</div></v-btn>
+                            <v-btn flat to="/test2"><div class="topscale subheading">회사소개</div></v-btn>
                         </v-toolbar-items>
 
 

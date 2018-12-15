@@ -17,9 +17,10 @@
 //     }
 // }
 
-
+var webpack = require('webpack');
+var path = require('path')
 module.exports = {
-    baseUrl: '/web/trip/dist/',
+    // baseUrl: '/web/trip/dist/',
     lintOnSave: false,
     devServer: {
         host: '182.162.22.21',
@@ -33,9 +34,19 @@ module.exports = {
                 }
             }
         }
-    }
+    },
+    configureWebpack: {
+        plugins: [
+            new webpack.ProvidePlugin({
+                'window.Quill': 'quill/dist/quill.js',
+                'Quill': 'quill/dist/quill.js',
+                $: 'jquery',
+                jQuery: 'jquery',
+                'window.jQuery': 'jquery'
+            }),
+        ]
+    },
 }
-
 /*module.exports = {
     entry: {
         app: 'main.js',

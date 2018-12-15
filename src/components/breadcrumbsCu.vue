@@ -30,6 +30,9 @@
                 case 'boards_vietnam' :
                     this.boardTitle = '베트남'
                     break;
+                default:
+                    this.boardTitle = '베트남'
+                    break;
             }
         },
         computed:{

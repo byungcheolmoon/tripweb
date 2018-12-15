@@ -24,4 +24,7 @@ export default {
 
     BOARD_NOTICE_CONTACTS : "boardNoticeContacts",
     BOARD_CURRENT_VIEW : "boardCurrentView",
+    BOARD_CURRENT_SKIN : "boardCurrentSkin",
+
+    PRIM_CODE : "primCode",
 }

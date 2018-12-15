@@ -1,99 +1,147 @@
+<template>
 
-    <template>
-        <v-container fluid>
-            <v-layout row wrap align-center>
-                <v-flex xs3 d-flex class="pa-2">
-                    <v-select
-                            v-model="select"
-                            hint="대분류 선택"
-                            :items="items"
-                            item-text="state"
-                            item-value="abbr"
-                            label="선택해주세요."
-                            persistent-hint
-                            return-object
-                            single-line
-                            :loading="loading"
-                            @change="selectChange"
-                    ></v-select>
-                </v-flex>
-                <v-flex xs3 d-flex class="pa-2">
-                    <v-select
-                            v-model="subselect"
-                            hint="소분류 선택"
-                            :items="subitems"
-                            item-text="state"
-                            item-value="abbr"
-                            label="선택해주세요."
-                            persistent-hint
-                            return-object
-                            single-line
-                            :loading="loading"
-                    ></v-select>
-                </v-flex>
-                <v-flex xs3 d-flex class="pa-2">
-                    <v-btn @click="submitBtn"> 버튼</v-btn>
+        <v-container>
+            <v-layout align-center justify-center row fill-height>
+                <v-flex xs10>
+                    <div class="quill-editor-example">
+                        <!-- quill-editor -->
+                        <quill-editor v-model="content"
+                                      ref="myQuillEditor"
+                                      :options="editorOption"
+                                      @blur="onEditorBlur($event)"
+                                      @focus="onEditorFocus($event)"
+                                      @ready="onEditorReady($event)"
+                                      @change="onEditorChange($event)">
+
+                        </quill-editor>
+                    </div>
                 </v-flex>
             </v-layout>
         </v-container>
-    </template>
 
+</template>
 
 <script>
+    import Quill from 'quill'
+    import { quillEditor } from 'vue-quill-editor'
+    import { ImageDrop } from 'quill-image-drop-module'
+    import ImageResize from 'quill-image-resize-module';
+
+    import 'quill/dist/quill.core.css'
+    import 'quill/dist/quill.snow.css'
+    import 'quill/dist/quill.bubble.css'
+
+    Quill.register('modules/imageDrop', ImageDrop)
+    Quill.register('modules/imageResize', ImageResize);
+
     export default {
-        name: "content-test",
-        data () {
+        name: "admin-prod-detail-step2",
+        props: ['no', 'mode'],
+        components:{
+            quillEditor
+        },
+        data() {
             return {
-                loading: false,
-                select: { state: '', abbr: '' },
-                items: [
-                    { state: '바다', abbr: 'cate1' },
-                    { state: '민물', abbr: 'cate2' },
-                    { state: '선상', abbr: 'cate3' }
-                ],
-                subselect :{ state: '', abbr: ''  },
-                subitems:[
-                ]
+                name: 'register-modules-example',
+                content: '',
+                editorOption: {
+                    modules: {
+                        toolbar: [
+                            ['bold', 'italic', 'underline', 'strike'],
+                            ['blockquote', 'code-block'],
+                            [{ 'header': 1 }, { 'header': 2 }],
+                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                            [{ 'script': 'sub' }, { 'script': 'super' }],
+                            [{ 'indent': '-1' }, { 'indent': '+1' }],
+                            [{ 'direction': 'rtl' }],
+                            [{ 'size': ['small', false, 'large', 'huge'] }],
+                            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                            [{ 'font': [] }],
+                            [{ 'color': [] }, { 'background': [] }],
+                            [{ 'align': [] }],
+                            ['clean'],
+                            ['link', 'image', 'video']
+                        ],
+                        history: {
+                            delay: 1000,
+                            maxStack: 50,
+                            userOnly: false
+                        },
+                        imageDrop: true,
+                        imageResize: {
+                            displayStyles: {
+                                backgroundColor: 'black',
+                                border: 'none',
+                                color: 'white'
+                            },
+                            modules: ['Resize', 'DisplaySize', 'Toolbar']
+                        },
+                    }
+                },
             }
         },
-        mounted(){
-            this.loading = true
-            this.select = { state: '바다', abbr: 'cate1' }
-            this.subselect = { state: '광어', abbr: 'ba1' }
-            this.loading = false
-
+        mounted() {
+            this.content = `<p><strong><em>Click on the Image Below to resize!</em></strong></p><br>` + this.content
+        },
+        computed: {
+            contentCode() {
+                return this.content
             },
-        methods:{
-            submitBtn(){
-                console.log(this.select.state)
-                console.log(this.subselect.state)
-            },
-            selectChange(selectObj){
-                this.subitems = this.subMenu(selectObj.state)
-            },
-            subMenu(value){
-                if(value == '바다'){
-                    return [
-                        { state: '광어', abbr: 'ba1' },
-                        { state: '우럭', abbr: 'ba2' },
-                        { state: '고등어', abbr: 'ba3' },
-                        { state: '손재익', abbr: 'ba4' },
-                    ]
-                } else {
-                    return [
-                        { state: '배스', abbr: 'm1' },
-                        { state: '박세정', abbr: 'm2' },
-                        { state: '성진', abbr: 'm3' },
-                        { state: '블루길', abbr: 'm4' },
-                    ]
-                }
-
+            editor() {
+                return this.$refs.myQuillEditor.quill
             }
         },
-
+        methods: {
+            onEditorBlur(editor) {
+                // console.log('editor blur!', editor)
+            },
+            onEditorFocus(editor) {
+                // console.log('editor focus!', editor)
+            },
+            onEditorReady(editor) {
+                // console.log('editor ready!', editor)
+            },
+            onEditorChange({ quill, html, text }) {
+                this.content = html
+            }
+        }
     }
 </script>
+<style>
+    .quill-editor:not(.bubble) .ql-container,
+    .quill-editor:not(.bubble) .ql-container .ql-editor {
+        height: 30rem;
+        padding-bottom: 1rem;
+    }
+</style>
 
-<style scoped>
-
+<style lang="scss" scoped>
+    .quill-editor,
+    .quill-code {
+        width: 50%;
+        float: left;
+    }
+    .quill-code {
+        height: auto;
+        border: none;
+        > .title {
+            border: 1px solid #ccc;
+            border-left: none;
+            height: 3em;
+            line-height: 3em;
+            text-indent: 1rem;
+            font-weight: bold;
+        }
+        > code {
+            width: 100%;
+            margin: 0;
+            padding: 1rem;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-left: none;
+            border-radius: 0;
+            height: 30rem;
+            overflow-y: auto;
+        }
+    }
 </style>

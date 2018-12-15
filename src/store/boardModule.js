@@ -8,11 +8,13 @@ import createPersistedState from 'vuex-persistedstate'
 export default {
     state: {
         currentview:'',
+        currentskin:'',
         isloading : false,
         BoardPage:{ pageno : 1 },
-        Boardpcheck: false
+        Boardpcheck: false,
+        primcode:'',
     },
-    plugins: [createPersistedState()],
+    //plugins: [createPersistedState()],
     mutations: {
         BoardPage (state, payload){
 
@@ -26,6 +28,9 @@ export default {
         },
         [Constant.BOARD_CURRENT_VIEW] : (state, payload) =>{
             state.currentview = payload.view
+        },
+        [Constant.BOARD_CURRENT_SKIN]:(state, payload) => {
+            state.currentskin = payload
         }
     },
     actions: {
@@ -34,7 +39,11 @@ export default {
         },
         [Constant.BOARD_CURRENT_VIEW]: (store, payload) => {
             store.commit(Constant.BOARD_CURRENT_VIEW, payload.view)
+        },
+        [Constant.BOARD_CURRENT_SKIN]:(store, payload) => {
+            store.commit(Constant.BOARD_CURRENT_SKIN, payload.skin)
         }
+
     },
     getters:{
     }

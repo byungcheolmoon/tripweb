@@ -32,10 +32,14 @@ import 'expose-loader?$!expose-loader?jQuery!jquery'
 import 'vueditor/dist/style/vueditor.min.css'
 import BoardDecs from './components/boardDescription'
 import BoardEditor from './components/boardEditor'
+import BoardEditUpdate from './components/boardEditPhoto'
 import BoardNoticeDetail from './components/boardNoticeDetail'
 import BoardNoticeList from './components/BoardNoticeList'
 
 import ContentTest from './components/contentTest'
+import ContentTest1 from './components/contentTest2'
+import ContentTest2 from './components/contentTest3'
+
 import adminBoard from './components/adminBoard'
 import BoardLists from './components/BoardLists'
 import BoardDetails from './components/BoardDetails';
@@ -46,9 +50,30 @@ import TourMain from './components/TourMain';
 import TourStep1 from './components/TourStep1';
 import TourStep2 from './components/TourStep2';
 
+
 import VueYoutube from 'vue-youtube'
+import CKEditor from '@ckeditor/ckeditor5-vue';
+
+
+
+// Require Froala Editor js file.
+require('froala-editor/js/froala_editor.pkgd.min')
+
+// Require Froala Editor css files.
+require('froala-editor/css/froala_editor.pkgd.min.css')
+require('font-awesome/css/font-awesome.css')
+require('froala-editor/css/froala_style.min.css')
+
+// Import and use Vue Froala lib.
+import VueFroala from 'vue-froala-wysiwyg'
+Vue.use(VueFroala)
+
+
+
 
 Vue.use(VueYoutube)
+
+Vue.use(CKEditor)
 
 Vue.use(VueVideoPlayer, /* {
   options: global default options,
@@ -122,11 +147,13 @@ const router = new VueRouter({
 
         { path: "/adminBoard" , name: 'adminBoard', component: adminBoard,
             children:[
-                /*{ path :'/boardto', name:'boards', component:BoardLists, props:true},*/
-                /*{ path :'/boardto1', name:'boards1', component:BoardLists, props:true},*/
                 { path :'/boards', name:'boards', component:BoardLists, props:true},
-                { path :'/Detail', name:'boardDetails', component:BoardDetails, props:true },
-                { path :'/editor', name:'boardsEditor', component:BoardEditor, props:true },
+                { path :'/Detail', name:'boardDetails', component:BoardDetails, props:true }, // 관리자 보드 디테일
+                { path :'/editor', name:'boardsEditor', component:BoardEditor, props:true,
+                    children:[
+                        { path:'editPhoto/:imgno', name:'EditPhoto',component: BoardEditUpdate, props: true }
+                    ]
+                },  // 관리자 보드 에디터
             ]
         },
 
@@ -146,6 +173,9 @@ const router = new VueRouter({
         },
 
         { path: "/test", name: 'test', component: ContentTest },
+        { path: "/test1", name:'test1', component: ContentTest1},
+        { path: "/test2", name:'test2', component: ContentTest2},
+
         { path: "/ProdDetail", name:'PrDetail', component:ProdDetailType1, props:true }
 
 

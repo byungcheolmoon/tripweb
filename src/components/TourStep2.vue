@@ -319,7 +319,7 @@
                             </v-layout>
                         </v-container>
 
-
+                        <div id="lasttap"></div>
                         <v-container fill-height grid-list-md text-xs-left class="pl-0 pr-0 mb-0">
                             <v-layout row wrap align-center justify-start>
                                 <v-flex xs12 class="mt-3 mb-2">
@@ -447,86 +447,6 @@
                             </v-layout>
                         </v-container>
 
-
-
-                        <v-container fill-height grid-list-md text-xs-left class="pl-0 pr-0 mb-0">
-                            <v-layout row wrap align-center justify-start>
-                                <v-flex xs12 class="mt-3 mb-2">
-                                    <p class="mb-0 headline">이 상품을 본 여행자가 함께 본 상품</p>
-                                </v-flex>
-                                <v-flex xs12 class="pl-3 pr-3">
-
-                                    <div class="card-row">
-                                        <div v-for="(card, index) in cards"
-                                             :key="index"
-                                             :ref="`card_${index}`"
-                                             @mouseover="hoverCard(index)"
-                                             @mouseout="hoverCard(-1)"
-                                             @click="click(card.title)"
-                                             class="card">
-
-                                            <img class="card-image"
-                                                 :class="{'selected': isSelected(index)}"
-                                                 :src="card.image"/>
-
-                                            <div class="card-footer">
-                                                <p class="card-text font-weigth-light">NEW</p>
-                                                <h3 class="card-title title" style="font-weight: 600">{{card.title}}</h3>
-                                                <p class="card-text">by
-                                                    <span
-                                                            class="card-author"
-                                                            :class="{'selected': isSelected(index)}">
-                                                            {{card.author}}
-                                                        </span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </v-flex>
-                            </v-layout>
-                        </v-container>
-
-
-                        <v-container fill-height grid-list-md text-xs-left class="pl-0 pr-0 mb-0">
-                            <v-layout row wrap align-center justify-start>
-                                <v-flex xs12 class="mt-3 mb-2">
-                                    <p class="mb-0 headline">방콕 추천 숙소</p>
-                                </v-flex>
-                                <v-flex xs12 class="pl-3 pr-3">
-
-                                    <div class="card-row">
-                                        <div v-for="(card1, index1) in cards1"
-                                             :key="index1"
-                                             :ref="`card1_${index1}`"
-                                             @mouseover="hoverCard1(index1)"
-                                             @mouseout="hoverCard1(-1)"
-                                             @click="click(card1.title)"
-                                             class="card">
-
-                                            <img class="card-image"
-                                                 :class="{'selected': isSelected1(index1)}"
-                                                 :src="card1.image"/>
-
-                                            <div class="card-footer">
-                                                <p class="card-text font-weigth-light">NEW</p>
-                                                <h3 class="card-title title" style="font-weight: 600">{{card1.title}}</h3>
-                                                <p class="card-text">by
-                                                    <span
-                                                            class="card-author"
-                                                            :class="{'selected': isSelected1(index1)}">
-                                                            {{card1.author}}
-                                                        </span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </v-flex>
-                            </v-layout>
-                        </v-container>
-
-
-
-
                         <!--<vue-ctk-date-time-picker-->
                         <!--v-model=datevalue-->
                         <!--range-mode-->
@@ -541,14 +461,94 @@
                         <!--<v-btn @click="testclick">text</v-btn>       선택할 날자 로그찍기    -->
                         <!--<div id="textareaCustom" v-html="this.content"></div> 콘텐츠 들어가는 부분 -->
 
-
                     </div>
+                </v-flex>
+                <v-flex xs12 style="position: relative; top:500px;">
+                    <v-container grid-list-md text-xs-left class="pl-0 pr-0 mb-0" >
+                        <v-layout row wrap align-center justify-start>
+                            <v-flex xs12 class="mt-3 mb-2">
+                                <p class="mb-0 headline">이 상품을 본 여행자가 함께 본 상품</p>
+                            </v-flex>
+                            <v-flex xs12 class="pl-3 pr-3">
+
+                                <div class="card-row">
+                                    <div v-for="(card, index) in cards"
+                                         :key="index"
+                                         :ref="`card_${index}`"
+                                         @mouseover="hoverCard(index)"
+                                         @mouseout="hoverCard(-1)"
+                                         @click="click(card.title)"
+                                         class="card">
+
+                                        <img class="card-image"
+                                             :class="{'selected': isSelected(index)}"
+                                             :src="card.image"/>
+
+                                        <div class="card-footer">
+                                            <p class="card-text font-weigth-light">NEW</p>
+                                            <h3 class="card-title title" style="font-weight: 600">{{card.title}}</h3>
+                                            <p class="card-text">by
+                                                <span
+                                                        class="card-author"
+                                                        :class="{'selected': isSelected(index)}">
+                                                            {{card.author}}
+                                                        </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </v-flex>
+                        </v-layout>
+                    </v-container>
+
+
+                    <v-container grid-list-md text-xs-left class="pl-0 pr-0 mb-0">
+                        <v-layout row wrap align-center justify-start>
+                            <v-flex xs12 class="mt-3 mb-2">
+                                <p class="mb-0 headline">방콕 추천 숙소</p>
+                            </v-flex>
+                            <v-flex xs12 class="pl-3 pr-3">
+
+                                <div class="card-row">
+                                    <div v-for="(card1, index1) in cards1"
+                                         :key="index1"
+                                         :ref="`card1_${index1}`"
+                                         @mouseover="hoverCard1(index1)"
+                                         @mouseout="hoverCard1(-1)"
+                                         @click="click(card1.title)"
+                                         class="card">
+
+                                        <img class="card-image"
+                                             :class="{'selected': isSelected1(index1)}"
+                                             :src="card1.image"/>
+
+                                        <div class="card-footer">
+                                            <p class="card-text font-weigth-light">NEW</p>
+                                            <h3 class="card-title title" style="font-weight: 600">{{card1.title}}</h3>
+                                            <p class="card-text">by
+                                                <span
+                                                        class="card-author"
+                                                        :class="{'selected': isSelected1(index1)}">
+                                                            {{card1.author}}
+                                                        </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </v-flex>
+                        </v-layout>
+                    </v-container>
                 </v-flex>
             </v-layout>
         </v-container>
 
 
-        <div class="floating">
+        <transition name="fade">
+        <div class="floating" v-show="FloatingTran">
+            <v-layout  v-scroll="onScroll" column align-center justify-center>
+                <v-subheader>Offset Top</v-subheader>
+                {{ offsetTop }}
+            </v-layout>
             <table class="table mt-2 mb-2" style="width: 100%;">
                 <tr>
                     <td style="width: 50%">
@@ -598,6 +598,7 @@
                 </tr>
             </table>
         </div>
+        </transition>
     </div>
 </template>
 
@@ -622,6 +623,8 @@
         }
     }
 
+
+
     export default {
         name: "tour-step2",
         props:['idx','cate'],
@@ -629,6 +632,9 @@
             TopBackground, VueCtkDateTimePicker
         },
         data: () => ({
+            FloatingXY:'',
+            FloatingTran:true,
+            offsetTop:0,
             middleonfoo:false,
             videoId: 'L1q3_XZ27N4',
             playerVars: {
@@ -788,9 +794,25 @@
                     this.content = data.bo_content
                     this.Detailbg = DetImgSearch(data.bo_img);
                 })
+            this.$nextTick(function() {
+                var divEl = $("#lasttap");
+                var divX = divEl.offset().top;
+                this.FloatingXY = divX;
+            });
 
         },
         methods:{
+            onScroll (e) {
+                //console.log(parseInt(window.pageYOffset || document.documentElement.scrollTop))
+                var aa = parseInt(this.FloatingXY);
+                var bb = parseInt(window.pageYOffset || document.documentElement.scrollTop);
+                if(aa < bb){
+                    this.FloatingTran = false;
+                } else {
+                    this.FloatingTran = true;
+                }
+                this.offsetTop = window.pageYOffset || document.documentElement.scrollTop
+            },
             middleopen(){
                 console.log('in');
               this.middleonfoo = true;
@@ -901,6 +923,13 @@
 </script>
 
 <style scoped>
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+        opacity: 0;
+    }
+
     #middleimg{
         height:400px;
         background-repeat: no-repeat;
@@ -1006,12 +1035,23 @@
         text-align:center;
         width: 300px;
         z-index:5;
-
         background-color: white;
         color : black;
         border: solid 1px lightgray;
         border-radius: 6px;
-
+    }
+    .floatingOff{
+        position: absolute;
+        right: 59%;
+        top: 6000px;
+        margin-right: -720px;
+        text-align:center;
+        width: 300px;
+        z-index:5;
+        background-color: red;
+        color : black;
+        border: solid 1px lightgray;
+        border-radius: 6px;
     }
 
     #textareaCustom{

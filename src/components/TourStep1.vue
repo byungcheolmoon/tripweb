@@ -105,6 +105,7 @@
     import CONF from "../Config";
     import axios from 'axios';
 
+
     export default {
         name: "tour-step1",
         data: function() {

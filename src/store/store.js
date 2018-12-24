@@ -6,6 +6,7 @@ import CONF from '../Config';
 import firebase from 'firebase';
 import adminModule from './adminModule.js';
 import boardModule from './boardModule.js';
+
 import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex);

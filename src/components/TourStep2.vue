@@ -37,7 +37,7 @@
                         </v-tabs>
                     </div>
 
-                    <div style="position: relative; top:460px; width: 850px; color:black; text-align: left">
+                    <div style="position: relative; top:460px; width: 860px; color:black; text-align: left">
                         <!--
                         <vue-ctk-date-time-picker
                                 v-model=datevalue
@@ -1029,7 +1029,7 @@
     }
     .floating {
         position: fixed;
-        right: 59%;
+        right: 58%;
         top: 200px;
         margin-right: -720px;
         text-align:center;

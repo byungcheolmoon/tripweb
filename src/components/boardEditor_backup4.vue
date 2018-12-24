@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-container style="width: 860px !important;">
+        <v-container style="width: 850px !important;">
             <bread-custom></bread-custom>
             <v-layout style="border-top:solid 1px lightgray" class="pt-4">
                 <v-flex xs12 class="pa-3">
@@ -8,7 +8,7 @@
                     <v-text-field
                             label="타이틀"
                             flat
-                            v-model="modelTitle"
+                            v-model="writetest.text"
                             background-color="#ffffff"
                             height="60px"
                     ></v-text-field>
@@ -37,17 +37,14 @@
 
             <v-divider class="mb-3 mt-3" light></v-divider>
                 <div id="boardheight" v-if="skinselect == '중단'">
-
-                    <froala :tag="'textarea'" :config="config" v-model="model"></froala>
-                    <v-btn block @click="clicks"  :disabled="!valid" color="secondary" block> 글 저장 </v-btn>
-                    <!--<vue-editor id="editor"
+                    <vue-editor id="editor"
                                 useCustomImageHandler
                                 @imageAdded="handleImageAdded"
                                 :customModules="customModulesForEditor"
                                 :editorOptions="editorSettings"
                                 v-model="editorcontent">
                     </vue-editor>
-                    <v-btn block @click="clicks"  :disabled="!valid" color="secondary" block> 글 저장 </v-btn>-->
+                    <v-btn block @click="clicks"  :disabled="!valid" color="secondary" block> 글 저장 </v-btn>
                 </div>
 
         </v-container>
@@ -165,7 +162,8 @@
                 localimgcount:0,
 
                 // 글제목 및 내용
-                modelTitle : '',
+                writetest : {text:''},
+                editorcontent: '',
 
                 // 콤보박스 유효성 검사
                 valid: true,
@@ -184,27 +182,22 @@
                 skinitems:['상단','중단','하단'],
 
                 // 보드 에디터
-                config: {
-                    placeholder: "Edit Me",
-                    events: {
-                        'froalaEditor.initialized': function () {
-                            //console.log('initialized')
-                        },
-                        'froalaEditor.image.beforeUpload': (e, editor, images) => {
-                            editor.opts.imageUploadParams['data'] = '8000';
-                            editor.opts.imageUploadURL = 'http://nawara-fish.com/web/tripajax/board.php';
-                            editor.opts.imageUploadMethod = 'POST';
-                            return true
-                        },
-                        'froalaEditor.image.uploaded': (e, editor, response) => {
-                            console.log(response)
-                        },
-                        'froalaEditor.focus' : function(e, editor) {
-                            console.log(editor.selection.get());
-                        }
-                    },
+                customToolbar: [
+                    ['bold', 'italic', 'underline'],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    ['image', 'code-block']
+                ],
+                customModulesForEditor: [
+                    { alias: "imageDrop", module: ImageDrop },
+                    { alias: "imageResize", module: ImageResize }
+                ],
+                editorSettings: {
+                    modules: {
+                        imageDrop: true,
+                        imageResize: {},
+                    }
                 },
-                model: '',
+
             }
         },
         created(){
@@ -229,10 +222,10 @@
                                 break;
                             default : this.skinselect = '중단'
                         }
-                        this.modelTitle = data.title
+                        this.writetest.text = data.title
                         this.select          = data.cate_sub
                         //this.titleImg        = data.img
-                        this.model  = data.content
+                        this.editorcontent  = data.content
                     })
             }
 
@@ -292,8 +285,20 @@
                   return false
               }
             },
+            handleImageAdded: function(file, Editor, cursorLocation, resetUploader) {
+                let formData = new FormData();
+                formData.append('image', file);
+                formData.append('cmd', '2000');
+                 this.loading = true
+                 axios.post(CONF.BOARD_INFO, formData)
+                     .then((response)=>{
+                         this.loading = false
+                         Editor.insertEmbed(cursorLocation, "image", response.data);
+                         resetUploader();
+                     })
+            },
             clicks() {
-                console.log(this.model)
+                console.log('save btn')
                 this.$store.commit(Constant.PRIM_CODE,{primcode:null})
             /*    var title = this.writetest.text;
                 var tag   = this.select;

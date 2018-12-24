@@ -25,8 +25,10 @@ export default {
     BOARD_NOTICE_CONTACTS : "boardNoticeContacts",
     BOARD_CURRENT_VIEW : "boardCurrentView",
     BOARD_CURRENT_SKIN : "boardCurrentSkin",
+    BOARD_CATEGORY : "boardCategory",
+    BOARD_CATESEARCH : "boardCatesearch",
 
-    BOARD_ADMIN_FETCH_DETAIL : "boardAdminFetchDetail",
-
+    BOARD_ADMIN_FETCH_IMGLIST : "boardAdminFetchDetail",
+    CHANGE_REGION: "changeRegion",
     PRIM_CODE : "primCode",
 }

@@ -1,6 +1,7 @@
+<!-- 2018 -12-19 백업  대분류, 공지사항, 베트남 등 있던 내용 -->
 <template>
     <div>
-        <v-container style="width: 1024px">
+        <v-container >
 
             <v-layout>
                 <v-flex xs12 d-flex>
@@ -22,7 +23,7 @@
                     <v-flex xs3 d-flex class="pa-2">
                         <v-select
                                 v-model="subselect"
-                                hint="중분류 선택"
+                                hint="소분류 선택"
                                 :items="subitems"
                                 item-text="state"
                                 item-value="abbr"
@@ -32,35 +33,16 @@
                                 single-line
                                 :loading="loading"
                                 v-bind:disabled="subtitleCheck"
-                                @change="selectSubChange"
                         ></v-select>
                     </v-flex>
-
-                    <v-flex xs3 d-flex class="pa-2">
-                        <v-select
-                                v-model="lastselect"
-                                hint="소분류 선택"
-                                :items="lastsubitems"
-                                item-text="state"
-                                item-value="abbr"
-                                label="전체"
-                                persistent-hint
-                                return-object
-                                single-line
-                                :loading="loading"
-                                @change="selectLastChange"
-                                v-bind:disabled="subtitleCheck"
-                        ></v-select>
-                    </v-flex>
-
-                    <v-flex xs3 d-flex class="pa-2">
+                    <v-flex xs6 d-flex class="pa-2">
                         <v-btn @click="submitBtn"> 버튼</v-btn>
                     </v-flex>
                 </v-flex>
 
             </v-layout>
         </v-container>
-        <v-container style="width: 1024px">
+        <v-container>
             <v-layout row wrap>
 
                 <bread-custom></bread-custom>
@@ -135,36 +117,29 @@
                     { align:'right', text: '', value: '' },
                 ],
 
-                // 아이템 리스트들 ..
                 boardCate :'',
                 select: { state: '', abbr: '' },
                 items: [
                     { state: '공지사항', abbr: 'notice' },
-                    { state: '여행지정보', abbr: 'trip' }
+                    { state: 'QnA', abbr: 'qna' },
+                    { state: '베트남', abbr: 'vietnam' }
                 ],
-
                 subtitleCheck:true,
                 subselect :{ state: '', abbr: ''  },
                 subitems:[
-                ],
-
-                lastselect :{ state: '', abbr: ''  },
-                lastsubitems:[
                 ]
-
             }
         },
         created(){ // created 는 data만 로드된 상태임으로 아직 dom은 배치되지 않았다.
-            this.$store.dispatch(Constant.BOARD_CATEGORY)
             if (this.$route.query) {
                 if(this.$route.query.cate == 'notice'){
                     this.select = { state: '공지사항', abbr: 'notice' }
                     this.subselect = { state:'',  addr: ''}
                     this.$store.commit(Constant.BOARD_CURRENT_VIEW, {view : 'boards_notice'})
-                } else if(this.$route.query.cate =='trip'){
-                    this.select = { state: '여행지정보', abbr: 'trip' }
-                    this.subitems = this.subMenu('trip');
-                    this.$store.commit(Constant.BOARD_CURRENT_VIEW, {view : 'boards_trip'})
+                } else if(this.$route.query.cate =='vietnam'){
+                    this.select = { state: '베트남', abbr: 'vietnam' }
+                    this.subitems = this.subMenu('베트남');
+                    this.$store.commit(Constant.BOARD_CURRENT_VIEW, {view : 'boards_vietnam'})
                 } else {
                     console.log('noting');
                 }
@@ -179,12 +154,19 @@
             ...mapState({
                 fetchPageno : state => state.board.BoardPage.pageno,
                 currentview : state => state.board.currentview,
-                boardCheck: state => state.board.Boardpcheck,
-                catesubList : state => state.board.adminBoardListInfo.abListSubCate
+                boardCheck: state => state.board.Boardpcheck
             }),
             pageCheck(){
                 return this.pagination.totalpages
             }
+        },
+        mounted(){
+            /*   this.getDataFromApi()
+                   .then(data => {
+                       this.desserts = data.items // 아이템들
+                       this.totalDesserts = data.total // 토탈.. 이게 의미가 있나?
+                       this.pagination.totalpages = data.pagetotal
+                   })*/
         },
         watch: {
             pagination: {
@@ -199,7 +181,7 @@
                             this.totalDesserts = data.total // 토탈.. 이게 의미가 있나?
                             this.pagination.totalpages = data.pagetotal
                             this.$store.commit({
-                                type:'BoardCheck',
+                                type:'BaordCheck',
                                 check:false
                             })
                         })
@@ -212,11 +194,6 @@
                 this.loading = true
                 return new Promise((resolve, reject) => {
                     var data = new FormData();
-                    // console.log('1')
-                    // console.log(this.select.abbr);
-                    // console.log('2')
-                    // console.log(this.subselect.state);
-                    // console.log('3')
                     data.append('cmd', '2001');
                     data.append('page', this.pagination.page)
                     data.append('boardtype', this.select.abbr)
@@ -241,7 +218,7 @@
 
             itemSelect(item) {
                 this.$store.commit({ type:'BoardPage', pageno:this.pagination.page })
-                this.$store.commit({ type:'BoardCheck', check:true })
+                this.$store.commit({ type:'BaordCheck', check:true })
                 this.$router.push({ name :"boardDetails", params:{ idx:item}})
 
             },
@@ -254,67 +231,48 @@
                 //this.$router.push({path:'/editor', query:{idx:item, mode:'edit'}})
             },
             submitBtn(){
-                console.log(this.subselect.state);
-                console.log(this.lastselect.state);
-
-
-                // 12-24일 현재 대, 중, 소 분류는 만들었는데  .. 버튼 눌렀을때 데이터 불러오는거 아직안함
-                // 이거 구조가 링크를 날려서 (push) 날려서.. watch에서 호출 하는 형태임.. 이거 옳지 않은데.. 고민 요망
-                // 아마.. 푸쉬로 날리는게 페이지 초기화 하려고 그러는거같다. 아마도 -_- 별지랄을 다 해봤겠지?
-
-
-
-                if(this.select.abbr == 'notice'){
+                if(this.select.state == '공지사항'){
                     this.$store.commit(Constant.BOARD_CURRENT_VIEW, {view : 'boards_notice'})
                     this.$store.commit({ type:'BoardPage', pageno:1 })
-                    this.$store.commit({ type:'BoardCheck', check:false })
+                    this.$store.commit({ type:'BaordCheck', check:false })
                     this.$router.push({path:'/boards', query:{cate:'notice', subcate:'',subcatevalue:'' }})
-                } else if(this.select.abbr == 'trip'){
-
-                    this.$store.commit(Constant.BOARD_CURRENT_VIEW, {view : 'boards_trip'})
+                } else if(this.select.state == '베트남'){
+                    this.$store.commit(Constant.BOARD_CURRENT_VIEW, {view : 'boards_vietnam'})
                     this.$store.commit({ type:'BoardPage', pageno:1 })
-                    this.$store.commit({ type:'BoardCheck', check:false })
-                    this.$router.push({path:'/boards', query:{cate:'trip', subcate:this.subselect.state, subcatevalue:this.subselect.abbr}})
+                    this.$store.commit({ type:'BaordCheck', check:false })
+                    this.$router.push({path:'/boards', query:{cate:'vietnam', subcate:this.subselect.state, subcatevalue:this.subselect.abbr}})
                 } else {
                     console.log( 'submitbtn noting')
                 }
 
             },
             selectChange(selectObj){
-                this.subitems = this.subMenu(selectObj.abbr)
+                this.subitems = this.subMenu(selectObj.state)
+
             },
             subMenu(value){
-                if(value == 'notice'){
+                if(value == '공지사항'){
                     this.subtitleCheck = true
                     return [
                         { state: '전체', abbr: '' },
                     ]
-                } else if(value == 'trip') {
+                } else if(value == '베트남') {
                     this.subtitleCheck = false
-                    var listdata = [];
-                    for(let i = 0; this.catesubList.length > i; i++){
-                        listdata.push({state:this.catesubList[i].cate_kor, abbr:this.catesubList[i].idx , code:this.catesubList[i].cate})
-                    }
-                    return listdata;
-
+                    return [
+                        { state: '전체', abbr: 'm0' },
+                        { state: '베트남소개', abbr: 'm1' },
+                        { state: '다낭소개', abbr: 'm2' },
+                        { state: '다낭상품', abbr: 'm3' },
+                        { state: '호이안소개', abbr: 'm4' },
+                        { state: '호이안상품', abbr: 'm5' },
+                    ]
                 } else {
                     return [
-                        { state: '전체', abbr: '' },
+                        { state: '', abbr: '' },
                     ]
                 }
             },
-            selectSubChange(selectObj){
-                this.$store.commit(Constant.CHANGE_REGION, {region : selectObj})
-                var lastdataArr = [];
-                var lastdata = this.$store.getters.lastcateBySelect
-                for(let i = 0; lastdata.length > i; i++){
-                    lastdataArr.push({state:lastdata[i].cate_sub_kor, abbr:lastdata[i].idx , code:lastdata[i].cate})
-                }
-                this.lastsubitems = lastdataArr;
-            },
-            selectLastChange(select){
-                // 소분류
-            }
+
         }
 
 

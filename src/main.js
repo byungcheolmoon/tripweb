@@ -66,6 +66,8 @@ require('froala-editor/css/froala_style.min.css')
 
 // Import and use Vue Froala lib.
 import VueFroala from 'vue-froala-wysiwyg'
+
+
 Vue.use(VueFroala)
 
 
@@ -149,7 +151,14 @@ const router = new VueRouter({
             children:[
                 { path :'/boards', name:'boards', component:BoardLists, props:true},
                 { path :'/Detail', name:'boardDetails', component:BoardDetails, props:true }, // 관리자 보드 디테일
-                { path :'/editor', name:'boardsEditor', component:BoardEditor, props:true,
+
+                { path :'/write', name:'boardsWrite', component:BoardEditor, props:true,
+                    children:[
+                        { path:'editPhoto/:imgno', name:'EditPhoto',component: BoardEditUpdate, props: true }
+                    ]
+                },  // 관리자 보드 에디터
+
+                { path :'/editor/:idx', name:'boardsEditor', component:BoardEditor, props:true,
                     children:[
                         { path:'editPhoto/:imgno', name:'EditPhoto',component: BoardEditUpdate, props: true }
                     ]

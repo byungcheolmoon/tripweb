@@ -44,20 +44,14 @@
 
     export default {
         name : "update-photo",
-        props : [ 'imgno', 'idx', 'imgvalue', 'mode' ],
+        props : [ 'imgno', 'idx' ],
         data: function(){
             return {
                 img:''
             }
         },
         mounted : function() {
-            if(this.imgvalue == 'none'){
-                this.img = 'http://nawara-fish.com/web/trip/src/assets/images/noimg.png'
-            } else {
-                this.img = this.imgvalue;
-            }
-
-           /* switch (this.imgno){
+            switch (this.imgno){
                 case 1:
                     if(this.imgs.img_1 != "none"){
                         this.img = this.imgs.img_1
@@ -123,20 +117,25 @@
                         this.img = 'http://nawara-fish.com/prc/img/noimg.png'
                     }
                     break;
-            }*/
+            }
+        },
+        computed:{
+            ...mapState({
+                imgs: state => state.board.adminBoardInfo.skintype2imglist
+            }),
         },
         methods : {
             cancelEvent : function() {
                 this.$router.go(-1)
             },
             submit : function() {
-                /*var file = this.$refs.photofile.files[0];
-                this.$store.dispatch(Constant.UPDATE_PHOTO, { idx:this.idx, img_num:this.imgno, file:file });
-                this.$router.go(-1)*/
+                var file = this.$refs.photofile.files[0];
+                //this.$store.dispatch(Constant.UPDATE_PHOTO, { idx:this.idx, img_num:this.imgno, file:file });
+                this.$router.go(-1)
             },
             deleteImg: function () {
-                /*this.$store.dispatch(Constant.UPDATE_PHOTO_DEL, { idx:this.idx, img_num:this.imgno });
-                this.$router.go(-1)*/
+                //this.$store.dispatch(Constant.UPDATE_PHOTO_DEL, { idx:this.idx, img_num:this.imgno });
+                this.$router.go(-1)
             }
         }
     }

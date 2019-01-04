@@ -58,16 +58,10 @@
                 <div id="textareaCustom" v-html="this.content">
                 </div>
             </v-flex>
-            <v-layout align-center justify-end row fill-height style="margin-top:15px;">
-                <v-flex xs1>
-                    <v-btn  round color="primary" block>수정</v-btn>
-                </v-flex>
-                <v-flex xs1 style="margin-left:10px;">
-                    <v-btn  dark round color="error" block>삭제</v-btn>
-                </v-flex>
-                <v-flex xs1 style="margin-left:10px;">
-                    <v-btn  dark round color="indigo" block>뒤로가기</v-btn>
-                </v-flex>
+            <v-layout v-layout align-center justify-end row fill-height>
+                <v-btn round color="primary" >수정</v-btn>
+                <v-btn  dark round color="error" >삭제</v-btn>
+                <v-btn  dark round color="indigo" >뒤로가기</v-btn>
             </v-layout>
         </v-layout>
     </v-container>
@@ -155,6 +149,7 @@
 <style scoped>
     #vcont{
         padding-top:0px;
+        width: 880px !important;
     }
     #textareaCustom{
         background-color: white;

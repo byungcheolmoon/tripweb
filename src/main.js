@@ -44,6 +44,8 @@ import adminBoard from './components/adminBoard'
 import BoardLists from './components/BoardLists'
 import BoardDetails from './components/BoardDetails';
 
+import BoardSetEditor from './components/boardSetEditor'
+
 import ProdDetailType1 from './components/ProdDetailType1';
 
 import TourMain from './components/TourMain';
@@ -54,6 +56,8 @@ import TourStep2 from './components/TourStep2';
 import VueYoutube from 'vue-youtube'
 import CKEditor from '@ckeditor/ckeditor5-vue';
 
+
+import ShowDetail from './components/showDetail'
 
 
 // Require Froala Editor js file.
@@ -149,8 +153,10 @@ const router = new VueRouter({
 
         { path: "/adminBoard" , name: 'adminBoard', component: adminBoard,
             children:[
-                { path :'/boards', name:'boards', component:BoardLists, props:true},
+                { path :'/boards/:readMode', name:'boards', component:BoardLists, props:true},
                 { path :'/Detail', name:'boardDetails', component:BoardDetails, props:true }, // 관리자 보드 디테일
+
+                { path :'/SetEditer/:idx', name:'boardsetEdit', component:BoardSetEditor, props:true }, // 관리자 보드 세트 에디터
 
                 { path :'/write', name:'boardsWrite', component:BoardEditor, props:true,
                     children:[
@@ -180,7 +186,7 @@ const router = new VueRouter({
 
             ]
         },
-
+        { path: "/showDetail", name: 'showDetail', component: ShowDetail, props:true},
         { path: "/test", name: 'test', component: ContentTest },
         { path: "/test1", name:'test1', component: ContentTest1},
         { path: "/test2", name:'test2', component: ContentTest2},

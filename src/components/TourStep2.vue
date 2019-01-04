@@ -132,7 +132,7 @@
                             <v-layout align-center justify-start>
                                 <v-flex xs12 text-xs-center>
                                     <v-container fill-height style="height: 549px;" >
-                                        <v-layout align-center justify-center >
+                                        <v-layout align-center justify-center>
                                             <v-card-text class="pt-0">
                                                 <v-img src="http://nawara-fish.com/web/trip/src/assets/images/chart.jpg" postion="center center" height="549px" width="723px" ></v-img>
                                             </v-card-text>

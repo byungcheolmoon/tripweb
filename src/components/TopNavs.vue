@@ -6,8 +6,14 @@
                 v-model="drawer"
                 fixed
                 app
-                v-if="this.memberinfo != null"
         >
+            <!--<v-navigation-drawer
+                    :clipped="$vuetify.breakpoint.lgAndUp"
+                    v-model="drawer"
+                    fixed
+                    app
+                    v-if="this.memberinfo != null"
+            >-->
             <v-list dense>
                 <template v-for="item in items" >
                     <v-layout
@@ -94,7 +100,7 @@
                         </v-menu>
 
                         <v-toolbar-items class="hidden-sm-and-down mt-1">
-                            <v-btn flat to="/test"><div class="topscale subheading">큐레이팅신청</div></v-btn>
+                            <v-btn flat to="/test"><div class="topscale subheading">큐레이팅신청1</div></v-btn>
                             <v-btn flat to="/test1"><div class="topscale subheading">동행</div></v-btn>
                             <v-btn flat to="/test2"><div class="topscale subheading">회사소개</div></v-btn>
                         </v-toolbar-items>
@@ -156,11 +162,12 @@
             localitems: [],
             localnickname: "",
             dialog: false,
-            drawer: false,
+            drawer: null,
             items: [
                 { icon: 'help', text: 'Index' },
                 { icon: 'play_arrow', text: 'Video' },
                 { icon: 'play_arrow', text: 'Board' },
+                { icon: 'play_arrow', text: 'BoardSet' },
             ]
         }),
         props: {
@@ -212,8 +219,30 @@
                         this.drawer = !this.drawer
                         /*this.$router.push({name:'boards', params:{ cate : 'notice', subcate: '', subcatevalue:'', pageno:1, type:'view', idx:''}} )*/
                        this.$store.dispatch(Constant.BOARD_CURRENT_VIEW, { view: 'boards_notice'})
-                        this.$router.push({path:'/boards', query:{ cate:'notice', subcate:'', subcatevalue:'', pageno:1, type:'view', idx:''}})
+                        this.$router.push({name:'boards', params:{ readMode:'piece'}, query:{ cate:'notice', subcate:'', subcatevalue:'', pageno:1, type:'view', idx:''}})
                         break;
+                    case 'BoardSet' :
+                        this.drawer = !this.drawer
+                        /*this.$router.push({name:'boards', params:{ cate : 'notice', subcate: '', subcatevalue:'', pageno:1, type:'view', idx:''}} )*/
+                        this.$store.dispatch(Constant.BOARD_CURRENT_VIEW, { view: 'boards_trip'})
+                        this.$router.push({name:'boards', params:{ readMode:'set'},   query:{
+                                cate:'all',
+                                pageno:1, type:'view', idx:'',no:'',
+                                nq:'',
+                                scateState:'',
+                                scateAbbr:'',
+                                scateCode:'',
+                                lcateState:'',
+                                lcateAbbr:'',
+                                lcateCode:''}})
+
+                        break;
+                    /*case 'Board' :
+                        this.drawer = !this.drawer
+                        /!*this.$router.push({name:'boards', params:{ cate : 'notice', subcate: '', subcatevalue:'', pageno:1, type:'view', idx:''}} )*!/
+                        this.$store.dispatch(Constant.BOARD_CURRENT_VIEW, { view: 'boards_notice'})
+                        this.$router.push({path:'/boards', query:{ readMode:'', cate:'notice', pageno:1, type:'view', idx:''}})
+                        break;*/
                 }
             },
             Clicks(item) {

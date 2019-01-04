@@ -27,6 +27,10 @@ export default {
     BOARD_CURRENT_SKIN : "boardCurrentSkin",
     BOARD_CATEGORY : "boardCategory",
     BOARD_CATESEARCH : "boardCatesearch",
+    BOARD_SETCATEGORY : "boardSetcategory",
+    BOARD_SETSAVE : "boardSetsave",
+    BOARD_SETVSHOWBOARD_SETEDITINFO:"boardSeteditinfo",
+    BOARD_SETVSHOW : "boardSetvshow",
 
     BOARD_ADMIN_FETCH_IMGLIST : "boardAdminFetchDetail",
     CHANGE_REGION: "changeRegion",

@@ -130,8 +130,8 @@
             },
             submit : function() {
                 var file = this.$refs.photofile.files[0];
-                //this.$store.dispatch(Constant.UPDATE_PHOTO, { idx:this.idx, img_num:this.imgno, file:file });
-                this.$router.go(-1)
+                this.$store.dispatch(Constant.UPDATE_PHOTO, { idx:this.idx, img_num:this.imgno, file:file });
+                //this.$router.go(-1)
             },
             deleteImg: function () {
                 //this.$store.dispatch(Constant.UPDATE_PHOTO_DEL, { idx:this.idx, img_num:this.imgno });

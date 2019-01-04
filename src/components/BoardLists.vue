@@ -119,6 +119,7 @@
 
     export default {
         name: "board-notice-list",
+        props: ['readMode'],
         components:{
             BreadCustom
         },
@@ -138,17 +139,14 @@
                 // 아이템 리스트들 ..
                 boardCate :'',
                 select: { state: '', abbr: '' },
-                items: [
-                    { state: '공지사항', abbr: 'notice' },
-                    { state: '여행지정보', abbr: 'trip' }
-                ],
+                items: null,
 
                 subtitleCheck:true,
-                subselect :{ state: '', abbr: ''  },
+                subselect :{ state: '', abbr: '', code:''  },
                 subitems:[
                 ],
 
-                lastselect :{ state: '', abbr: ''  },
+                lastselect :{ state: '', abbr: '', code:''  },
                 lastsubitems:[
                 ]
 
@@ -156,22 +154,31 @@
         },
         created(){ // created 는 data만 로드된 상태임으로 아직 dom은 배치되지 않았다.
             this.$store.dispatch(Constant.BOARD_CATEGORY)
+
+                if(this.readMode == 'piece'){
+                 this.items = [ { state: '공지사항', abbr: 'notice' },{ state: '여행지정보', abbr: 'trip' }];
+                } else {
+                    this.items = [ { state: '선택', abbr: 'all' },{ state: '여행지정보', abbr: 'trip' }];
+                }
             if (this.$route.query) {
+                //var cates = this.lastSelectOne(this.$route.query.subcatevalue);
                 if(this.$route.query.cate == 'notice'){
                     this.select = { state: '공지사항', abbr: 'notice' }
-                    this.subselect = { state:'',  addr: ''}
+                    this.subselect = { state:'',  abbr: '', code:''}
                     this.$store.commit(Constant.BOARD_CURRENT_VIEW, {view : 'boards_notice'})
                 } else if(this.$route.query.cate =='trip'){
                     this.select = { state: '여행지정보', abbr: 'trip' }
-                    this.subitems = this.subMenu('trip');
+                    this.subselect = { state: this.$route.query.scateState, abbr: parseInt(this.$route.query.scateAbbr), code: this.$route.query.scateCode }
+                    this.lastselect = { state: this.$route.query.lcateState, abbr: parseInt(this.$route.query.lcateAbbr), code : this.$route.query.lcateCode }
+                    this.selectSubChange(this.subselect)
+                    this.subitems = this.subMenu('trip'); // 리스트 뷰에 중분류 넣기위해
                     this.$store.commit(Constant.BOARD_CURRENT_VIEW, {view : 'boards_trip'})
                 } else {
-                    console.log('noting');
+                    this.select = { state: '선택', abbr: 'all' }
+                    this.subselect = { state:'',  abbr: '', code:''}
                 }
-                if (this.$route.query.subcate) {
+                if(this.$route.query.subcate) {
                     this.subtitleCheck = false
-                    this.subselect.state = this.$route.query.subcate;
-                    this.subselect.abbr = this.$route.query.subcatevalue;
                 }
             }
         },
@@ -180,7 +187,8 @@
                 fetchPageno : state => state.board.BoardPage.pageno,
                 currentview : state => state.board.currentview,
                 boardCheck: state => state.board.Boardpcheck,
-                catesubList : state => state.board.adminBoardListInfo.abListSubCate
+                catesubList : state => state.board.adminBoardListInfo.abListSubCate,
+                catelastList : state => state.board.adminBoardListInfo.abListLastCate
             }),
             pageCheck(){
                 return this.pagination.totalpages
@@ -208,19 +216,33 @@
             },
         },
         methods: {
+            lastSelectOne(value){ // 마지막꺼 필터로 긁어올때 쓰면 좋을듯?
+                return this.catelastList.filter(c=>c.idx === value);
+            },
             getDataFromApi () {
                 this.loading = true
                 return new Promise((resolve, reject) => {
                     var data = new FormData();
-                    // console.log('1')
-                    // console.log(this.select.abbr);
-                    // console.log('2')
-                    // console.log(this.subselect.state);
-                    // console.log('3')
-                    data.append('cmd', '2001');
+                    var step1 = this.select.abbr
+                    var step2 = this.subselect.state
+                    var step3 = this.lastselect.state
+                    var cmd;
+
+                        if(this.readMode == 'piece'){
+                            cmd = '2001';
+                        } else if(this.readMode == 'set'){
+                            cmd = '2011';
+                        } else {
+                            cmd = '2001';
+                        }
+
+                    data.append('cmd', cmd);
                     data.append('page', this.pagination.page)
-                    data.append('boardtype', this.select.abbr)
-                    data.append('boardsubtype', this.subselect.state)
+
+                    data.append('step1', step1)
+                    data.append('step2', step2)
+                    data.append('step3', step3)
+
 
                     axios.post(CONF.BOARD_INFO, data)
                         .then((response)=>{
@@ -246,35 +268,45 @@
 
             },
             newBoardWrite(){
-                this.$router.push({ name :"boardsWrite", params:{ mode:'add' }})
-                //this.$router.push({path:'/editor', query:{mode:'add'}})
+                this.$store.commit({ type:'adBoardMode', mode:'add' })
+
+                if(this.readMode == 'piece'){
+                    this.$router.push({ name :"boardsWrite", params:{ mode:'add' }})
+                } else {
+                    this.$router.push({ name :"boardsetEdit", params:{ idx:'add' }, query:{mode:'add'} })
+                }
+
             },
             BoardEdit(item){
-                this.$router.push({ name :"boardsEditor", params:{ idx:item, mode:'edit'}})
-                //this.$router.push({path:'/editor', query:{idx:item, mode:'edit'}})
+                this.$store.commit({ type:'adBoardMode', mode:'edit' })
+                if(this.readMode == 'piece'){
+                    this.$router.push({ name :"boardsEditor", params:{ idx:item }})
+                } else {
+                    this.$router.push({ name :"boardsetEdit", params:{ idx:item }})
+                }
+
             },
             submitBtn(){
-                console.log(this.subselect.state);
-                console.log(this.lastselect.state);
-
-
-                // 12-24일 현재 대, 중, 소 분류는 만들었는데  .. 버튼 눌렀을때 데이터 불러오는거 아직안함
-                // 이거 구조가 링크를 날려서 (push) 날려서.. watch에서 호출 하는 형태임.. 이거 옳지 않은데.. 고민 요망
-                // 아마.. 푸쉬로 날리는게 페이지 초기화 하려고 그러는거같다. 아마도 -_- 별지랄을 다 해봤겠지?
-
-
-
                 if(this.select.abbr == 'notice'){
                     this.$store.commit(Constant.BOARD_CURRENT_VIEW, {view : 'boards_notice'})
                     this.$store.commit({ type:'BoardPage', pageno:1 })
                     this.$store.commit({ type:'BoardCheck', check:false })
-                    this.$router.push({path:'/boards', query:{cate:'notice', subcate:'',subcatevalue:'' }})
+                    this.$router.push({name:'boards', query:{cate:'notice', subcate:true,subcatevalue:'' }})
                 } else if(this.select.abbr == 'trip'){
 
                     this.$store.commit(Constant.BOARD_CURRENT_VIEW, {view : 'boards_trip'})
                     this.$store.commit({ type:'BoardPage', pageno:1 })
                     this.$store.commit({ type:'BoardCheck', check:false })
-                    this.$router.push({path:'/boards', query:{cate:'trip', subcate:this.subselect.state, subcatevalue:this.subselect.abbr}})
+                    this.$router.push({name:'boards', query:{ no:this.subselect.abbr,
+                                                                nq:this.lastselect.abbr,
+                                                                cate:'trip',
+                                                                scateState:this.subselect.state,
+                                                                scateAbbr:this.subselect.abbr,
+                                                                scateCode:this.subselect.code,
+                                                                lcateState:this.lastselect.state,
+                                                                lcateAbbr:this.lastselect.abbr,
+                                                                lcateCode:this.lastselect.code
+                    }})
                 } else {
                     console.log( 'submitbtn noting')
                 }
@@ -313,7 +345,7 @@
                 this.lastsubitems = lastdataArr;
             },
             selectLastChange(select){
-                // 소분류
+
             }
         }
 

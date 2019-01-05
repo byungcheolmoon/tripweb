@@ -45,7 +45,6 @@
                     ></v-textarea>
                     <label for="img_th">썸네일 이미지: </label>
                     <input class="mb-2" ref="thfile" type="file" id="img_th" @change="onFileChange" />
-
                 </v-flex>
             </v-layout>
             <v-layout>
@@ -209,17 +208,6 @@
             this.$store.dispatch(Constant.BOARD_CATEGORY)
             if(this.idx != 'add'){
                 this.$store.dispatch(Constant.BOARD_SETEDITINFO, {idx:this.idx})
-              /*  this.select = {state:this.editinfoCate1.state, abbr:this.editinfoCate1.abbr}
-                this.selectChange({state:this.editinfoCate1.state, abbr:this.editinfoCate1.abbr})
-                this.subselect = {state:this.editinfoCate2.state, abbr:parseInt(this.editinfoCate2.abbr), code:this.editinfoCate2.code}
-                this.selectSubChange({state:this.editinfoCate2.state, abbr:parseInt(this.editinfoCate2.abbr), code:this.editinfoCate2.code})
-                this.lastselect = {state:this.editinfoCate3.state, abbr:parseInt(this.editinfoCate3.abbr), code:this.editinfoCate3.code}
-                this.localTlevelSelect = {title:this.editinfoTlevel[0].board_title, idx:this.editinfoTlevel[0].board_idx}
-                this.localMlevelSelect = {title:this.editinfoMlevel[0].board_title, idx:this.editinfoMlevel[0].board_idx}
-                this.localBlevelSelect = {title:this.editinfoBlevel[0].board_title, idx:this.editinfoBlevel[0].board_idx}
-                this.localimgs = this.editinfoImg
-                this.selectLast();
-                */
                 this.localimgs   = this.editinfoImg
                 this.setTitle    = this.editinfoTitle
                 this.setSubTitle = this.editinfoSubTitle

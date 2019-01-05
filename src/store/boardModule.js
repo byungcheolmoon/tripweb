@@ -28,13 +28,18 @@ export default {
             levelcheck:'',
             abseTitle:'',
             abseSubTitle:'',
+            abseSkinType:null,
+            abseProdPriceDef:{},
+            abseProdPriceEtc:{},
+            abseProdPriceCount:0,
+            abseContent:null,
+            abseVideo:null,
             abseCate1:{},
             abseCate2:{},
             abseCate3:{},
             abseImg:'',
-            abseTlevel:[],
-            abseMlevel:[],
-            abseBlevel:[]
+            abseImgList:[],
+            abseImgCount:[]
         },
         adminBoardSetCate:{
             tlevel:[],
@@ -83,11 +88,11 @@ export default {
           state.primcode = payload.primcode
         },
         [Constant.BOARD_ADMIN_FETCH_IMGLIST]:(state, payload) => { // 디테일 중에서 이미지
-            state.adminBoardInfo.skintype2imglist = payload.imglist
+            state.adminBoardInfo.skintype2imglist = payload.imglist;
             state.adminBoardInfo.skintype2imgcount = payload.count
         },
         [Constant.BOARD_CATEGORY] : (state, payload) => {
-            state.adminBoardListInfo.abListSubCate = payload.cate
+            state.adminBoardListInfo.abListSubCate = payload.cate;
             state.adminBoardListInfo.abListLastCate = payload.subcate
         },
         [Constant.BOARD_CATESEARCH] : (state, payload) =>{
@@ -100,35 +105,40 @@ export default {
             state.adminBoardInfo.skintype2imgcount = payload.count
         },
         [Constant.BOARD_SETCATEGORY]:(state, payload)=>{
-            state.adminBoardSetCate.tlevel = payload.tlevel
-            state.adminBoardSetCate.mlevel = payload.mlevel
+            state.adminBoardSetCate.tlevel = payload.tlevel;
+            state.adminBoardSetCate.mlevel = payload.mlevel;
             state.adminBoardSetCate.blevel = payload.blevel
         },
         [Constant.BOARD_SETSAVE]:(state)=>{
             state.adminBoardSetResult  = !state.adminBoardSetResult;
         },
-        [Constant.BOARD_SETEDITINFO]:(state, payload)=>{
+        [Constant.BOARD_SETEDITINFO]:(state, payload)=>{ // 보드 디테일
             state.adminBoardSetEditInfo.levelcheck      = payload.idx;
-            state.adminBoardSetEditInfo.abseCate1       = payload.info.cate1;
-            state.adminBoardSetEditInfo.abseCate2       = payload.info.cate2;
-            state.adminBoardSetEditInfo.abseCate3       = payload.info.cate3;
-            state.adminBoardSetEditInfo.abseTitle       = payload.info.title;
-            state.adminBoardSetEditInfo.abseSubTitle    = payload.info.subtitle;
-            state.adminBoardSetEditInfo.abseImg          = payload.info.img;
-            state.adminBoardSetEditInfo.abseTlevel      = payload.info.tlevel;
-            state.adminBoardSetEditInfo.abseMlevel      = payload.info.mlevel;
-            state.adminBoardSetEditInfo.abseBlevel      = payload.info.blevel;
+            state.adminBoardSetEditInfo.abseCate1       = payload.info.info.cate1;
+            state.adminBoardSetEditInfo.abseCate2       = payload.info.info.cate2;
+            state.adminBoardSetEditInfo.abseCate3       = payload.info.info.cate3;
+            state.adminBoardSetEditInfo.abseTitle       = payload.info.info.title;
+            state.adminBoardSetEditInfo.abseSubTitle    = payload.info.info.subtitle;
+            state.adminBoardSetEditInfo.abseContent    = payload.info.info.content;
+            state.adminBoardSetEditInfo.abseThimg       = payload.info.info.img;
+            state.adminBoardSetEditInfo.abseImgList  = payload.info.imglist;
+            state.adminBoardSetEditInfo.abseImgCount = payload.info.info.img_count
+            state.adminBoardSetEditInfo.abseProdPriceDef = payload.prodDef[0];
+            state.adminBoardSetEditInfo.abseProdPriceEtc = payload.prodEtc;
+            state.adminBoardSetEditInfo.abseProdPriceCount = payload.prodEtcCount;
+            state.adminBoardSetEditInfo.abseSkinType = payload.info.info.skintype;
+            state.adminBoardSetEditInfo.abseVideo = payload.info.info.videoid;
         },
         [Constant.BOARD_SETVSHOW]:(state, payload)=>{
-            state.adminBoardTemp.topInfo.tTitle     = payload.tinfo.title
-            state.adminBoardTemp.topInfo.tVideo     = payload.tinfo.videoid
-            state.adminBoardTemp.topInfo.tImgCount  = payload.tinfo.img_count
-            state.adminBoardTemp.topInfo.tImgList   = payload.tinfo.imglist
+            state.adminBoardTemp.topInfo.tTitle     = payload.tinfo.title;
+            state.adminBoardTemp.topInfo.tVideo     = payload.tinfo.videoid;
+            state.adminBoardTemp.topInfo.tImgCount  = payload.tinfo.img_count;
+            state.adminBoardTemp.topInfo.tImgList   = payload.tinfo.imglist;
 
-            state.adminBoardTemp.middleInfo.mTitle = payload.minfo.board_title
-            state.adminBoardTemp.middleInfo.mContent = payload.minfo.board_content
+            state.adminBoardTemp.middleInfo.mTitle = payload.minfo.board_title;
+            state.adminBoardTemp.middleInfo.mContent = payload.minfo.board_content;
 
-            state.adminBoardTemp.bottomInfo.bTitle = payload.binfo.board_title
+            state.adminBoardTemp.bottomInfo.bTitle = payload.binfo.board_title;
             state.adminBoardTemp.bottomInfo.bContent = payload.binfo.board_content
         }
     },
@@ -229,10 +239,24 @@ export default {
             data.append('idx', payload.idx);
             axios.post(CONF.BOARD_INFO, data)
                 .then((response)=>{
+                    var prodDef = [];
+                    var prodEtc = [];
+                    response.data.info.prodprice.forEach(function(data){
+                        if(data.prod_dateType == 'def'){
+                            prodDef.push({start:data.prod_startDate, end:data.prod_endDate, price:data.prod_price, pidx:data.prod_idx})
+                        } else {
+                            prodEtc.push({start:data.prod_startDate, end:data.prod_endDate, price:data.prod_price, pidx:data.prod_idx})
+                        }
+                    })
+                    var prodEtcCount = prodEtc.length
+
                     store.commit(Constant.BOARD_SETEDITINFO,
                         {
                             idx:payload.idx,
-                            info:response.data
+                            info:response.data,
+                            prodDef:prodDef,
+                            prodEtc:prodEtc,
+                            prodEtcCount:prodEtcCount
                         })
                 })
         },

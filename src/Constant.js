@@ -29,7 +29,7 @@ export default {
     BOARD_CATESEARCH : "boardCatesearch",
     BOARD_SETCATEGORY : "boardSetcategory",
     BOARD_SETSAVE : "boardSetsave",
-    BOARD_SETVSHOWBOARD_SETEDITINFO:"boardSeteditinfo",
+    BOARD_SETEDITINFO:"boardSeteditinfo",
     BOARD_SETVSHOW : "boardSetvshow",
 
     BOARD_ADMIN_FETCH_IMGLIST : "boardAdminFetchDetail",
